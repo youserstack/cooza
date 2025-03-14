@@ -13,7 +13,6 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
-import { useCommandState } from "cmdk";
 
 // 표시할 항목들 (예시 데이터)
 const items = [
@@ -33,32 +32,46 @@ export default function CustomCommand() {
   const ref = useRef<HTMLInputElement>(null);
   const [isComposing, setIsComposing] = useState(false); // 2바이트한글단어 완성중인지 상태변수
 
-  // const selectedItem = useCommandState((state) => state.value); // 현재 선택된 아이템 가져오기
+  // 검색어변경시 입력요소의값으로 검색어를설정(자동으로변경되지않기때문에 수동으로설정해야함)
+  useEffect(() => {
+    if (ref.current && !isComposing) {
+      ref.current.value = value;
+    }
+  }, [value]);
 
-  // // 방향키로 이동할 때 input value를 변경
-  // useEffect(() => {
-  //   if (ref.current && !isComposing) {
-  //     console.log("set");
-  //     ref.current.value = value;
-  //   }
-  // }, [value]);
+  useEffect(() => {
+    const shortcut = (e: KeyboardEvent) => {
+      if (e.key === "/") {
+        e.preventDefault();
+        ref.current?.focus();
+      }
+    };
 
-  // useEffect(() => console.log({ value }), [value]);
+    document.addEventListener("keydown", shortcut);
+    return () => document.removeEventListener("keydown", shortcut);
+  }, []);
 
   return (
     <Command
       className="rounded-lg border shadow-md md:min-w-[450px]"
+      // 기본설정
       value={value}
       onValueChange={setValue}
+      // 포커스설정
+      onMouseOver={() => ref.current?.focus()}
       loop
+      // 한글설정(한글은 초성, 중성, 종성을 가지기 때문에 컴포지션 이벤트가 필요)
       onCompositionStart={() => setIsComposing(true)}
       onCompositionEnd={() => setIsComposing(false)}
+      // 검색설정
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          // console.log("enter", value);
+          // 라우팅처리
+        }
+      }}
     >
-      <CommandInput
-        // value={value}
-        // onValueChange={setValue}
-        ref={ref}
-      />
+      <CommandInput ref={ref} />
 
       <CommandList>
         <CommandEmpty>해당 키워드로 추천되는 항목이 없습니다.</CommandEmpty>
@@ -69,18 +82,17 @@ export default function CustomCommand() {
               <CommandItem
                 key={item.label}
                 value={item.label}
-                onSelect={() => {
-                  console.log("on select");
-                  setValue(item.label);
-                  if (ref.current) {
-                    ref.current.value = value;
-                  }
-                  // if (ref.current && !isComposing) {
-                  //   console.log("set");
-                  //   ref.current.value = value;
-                  // }
-                }}
-                // onSelect={() => setValue(item.label)}
+                onSelect={() => setValue(item.label)}
+                // onSelect={() => {
+                //   setValue(item.label);
+                //   // if (ref.current) {
+                //   //   ref.current.value = value;
+                //   // }
+                //   // if (ref.current && !isComposing) {
+                //   //   console.log("set");
+                //   //   ref.current.value = value;
+                //   // }
+                // }}
                 // onSelect={(value) => setValue(value)}
                 // disabled={item.disabled}
               >
