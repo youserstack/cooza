@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/custom/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ShipWheel } from "lucide-react";
@@ -84,14 +85,16 @@ export default function Footer() {
       <section className="text-muted-foreground flex items-center gap-8 justify-between text-xs">
         <p>© 2025 youserstack. All rights reserved.</p>
 
-        <ul className="flex items-center gap-4">
+        {/* <ul className="flex items-center gap-4">
           <Link href="" className="hover:underline">
             개인정보
           </Link>
           <Link href="" className="hover:underline">
             이용약관
           </Link>
-        </ul>
+        </ul> */}
+
+        <ModeToggle />
       </section>
     </footer>
   );

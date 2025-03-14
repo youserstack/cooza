@@ -12,7 +12,7 @@ export default async function Header() {
 
   return (
     <header className="Header">
-      <section className="max-w-screen-lg mx-auto flex justify-between items-center gap-4 p-2">
+      <section className="flex justify-between items-center gap-4 p-2">
         <Logo />
         <Nav />
         <div className="flex gap-6 items-center">
