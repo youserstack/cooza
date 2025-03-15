@@ -131,7 +131,8 @@
 
   header {
     section {
-      @apply max-w-6xl mx-auto;
+      @apply max-w-6xl mx-auto
+      border border-dashed border-zinc-500;
     }
   }
 

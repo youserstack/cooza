@@ -1,9 +1,12 @@
 import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import CartIcon from "@/components/custom/cart-icon";
+import CustomCommand from "@/components/custom/custom-command";
 import Logo from "@/components/custom/logo";
+import { ModeToggle } from "@/components/custom/mode-toggle";
 import Nav from "@/components/custom/nav";
 import UserAvatar from "@/components/custom/user-avatar";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export default async function Header() {
@@ -12,8 +15,17 @@ export default async function Header() {
 
   return (
     <header className="Header">
-      <section className="flex justify-between items-center gap-4 p-2">
+      <section className="relative overflow-visible flex items-center justify-between gap-4 p-2">
         <Logo />
+        <div className="relative flex justify-center items-center z-[100]">
+          <div className="h-[40px]">
+            <CustomCommand />
+          </div>
+        </div>
+        <ModeToggle />
+      </section>
+
+      <section className="flex justify-between items-center gap-4 p-2">
         <Nav />
         <div className="flex gap-6 items-center">
           <CartIcon />

@@ -9,10 +9,8 @@ export default async function Home() {
   return (
     <main>
       <section className="flex justify-center items-center">
-        <div className="h-[50vh] border-2 border-green-500">
-          <div>
-            <CustomCommand />
-          </div>
+        <div className="h-[50vh] /border-2 border-green-500">
+          <div>{/* <CustomCommand /> */}</div>
         </div>
       </section>
 
