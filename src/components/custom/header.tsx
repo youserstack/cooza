@@ -17,11 +17,7 @@ export default async function Header() {
     <header className="Header">
       <section className="relative overflow-visible flex items-center justify-between gap-4 p-2">
         <Logo />
-        <div className="relative flex justify-center items-center z-[100]">
-          <div className="h-[40px]">
-            <CustomCommand />
-          </div>
-        </div>
+        <SearchBar />
         <ModeToggle />
       </section>
 
@@ -46,5 +42,15 @@ function SigninButton() {
     <Button size={"sm"} asChild>
       <Link href={"/signin"}>로그인</Link>
     </Button>
+  );
+}
+
+function SearchBar() {
+  return (
+    <div className="SearchBar relative flex justify-center items-center z-[100]">
+      <div className="h-[40px] /ring">
+        <CustomCommand />
+      </div>
+    </div>
   );
 }

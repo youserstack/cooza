@@ -30,7 +30,7 @@ const items = [
 
 export default function CustomCommand() {
   const [value, setValue] = useState(""); // 검색어
-  const [open, setOpen] = useState(true); // 리스트 활성여부 플래그
+  const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
   const [isComposing, setIsComposing] = useState(false); // 컴포지션(2바이트한글단어) 플래그
   const ref = useRef<HTMLInputElement>(null); // 입력요소
 
@@ -56,7 +56,10 @@ export default function CustomCommand() {
   return (
     <Command
       className={cn(
-        "rounded-lg border shadow-md md:min-w-[450px] max-w-md h-fit",
+        "rounded-lg border shadow-md md:min-w-[450px]",
+
+        // 추가스타일
+        "max-w-md h-auto /h-fit",
         open ? "" : "[&_.command-input-wrapper]:border-b-transparent"
         // open ? "" : "[&_data-[slot=command-input-wrapper]]:border-b-0"
       )}
@@ -82,10 +85,7 @@ export default function CustomCommand() {
       <CommandInput ref={ref} />
 
       {open && (
-        <CommandList
-        //
-        // className="absolute top-full bg-background w-full"
-        >
+        <CommandList>
           <CommandEmpty>해당 키워드로 추천되는 항목이 없습니다.</CommandEmpty>
 
           <CommandGroup heading="Suggestions">

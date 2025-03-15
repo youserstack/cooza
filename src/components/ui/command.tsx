@@ -57,7 +57,12 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="command-input-wrapper flex h-9 items-center gap-2 border-b px-3"
+      className={cn(
+        "flex h-9 items-center gap-2 border-b px-3",
+
+        // 추가클래스
+        "command-input-wrapper"
+      )}
     >
       <SearchIcon className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
