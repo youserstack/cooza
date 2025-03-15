@@ -48,7 +48,7 @@ function SigninButton() {
 function SearchBar() {
   return (
     <div className="SearchBar relative flex justify-center items-center z-[100]">
-      <div className="h-[40px] /ring">
+      <div className="h-[32px] /ring">
         <CustomCommand />
       </div>
     </div>

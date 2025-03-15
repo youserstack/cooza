@@ -61,7 +61,6 @@ export default function CustomCommand() {
         // 추가스타일
         "max-w-md h-auto /h-fit",
         open ? "" : "[&_.command-input-wrapper]:border-b-transparent"
-        // open ? "" : "[&_data-[slot=command-input-wrapper]]:border-b-0"
       )}
       // 기본설정
       value={value}
@@ -86,26 +85,15 @@ export default function CustomCommand() {
 
       {open && (
         <CommandList>
-          <CommandEmpty>해당 키워드로 추천되는 항목이 없습니다.</CommandEmpty>
+          <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
 
-          <CommandGroup heading="Suggestions">
+          <CommandGroup heading="검색제안">
             {items.map((item) => {
               return (
                 <CommandItem
                   key={item.label}
                   value={item.label}
                   onSelect={() => setValue(item.label)}
-                  // onSelect={() => {
-                  //   setValue(item.label);
-                  //   // if (ref.current) {
-                  //   //   ref.current.value = value;
-                  //   // }
-                  //   // if (ref.current && !isComposing) {
-                  //   //   console.log("set");
-                  //   //   ref.current.value = value;
-                  //   // }
-                  // }}
-                  // onSelect={(value) => setValue(value)}
                   // disabled={item.disabled}
                 >
                   {item.icon}

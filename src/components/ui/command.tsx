@@ -61,7 +61,7 @@ function CommandInput({
         "flex h-9 items-center gap-2 border-b px-3",
 
         // 추가클래스
-        "command-input-wrapper"
+        "command-input-wrapper h-8"
       )}
     >
       <SearchIcon className="size-4 shrink-0 opacity-50" />
