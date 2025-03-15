@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 // 표시할 항목들 (예시 데이터)
 const items = [
@@ -31,53 +32,47 @@ const items = [
 export default function CustomCommand() {
   const [value, setValue] = useState(""); // 검색어
   const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
-  const root = useRef<HTMLInputElement>(null); // 입력요소
-  const ref = useRef<HTMLInputElement>(null); // 입력요소
-
-  const [tempValue, setTempValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null); // 입력요소
+  const router = useRouter();
 
   useEffect(() => {
-    const shortcut = (e: KeyboardEvent) => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      // console.log(e.key);
+
       if (e.key === "/") {
         e.preventDefault();
-        ref.current?.focus(); // 입력요소 포커스
+        inputRef.current?.focus(); // 입력요소 포커스
         setOpen(true); // 리스트 활성화
       }
+
       if (e.key === "Escape") {
         e.preventDefault();
-        ref.current?.blur(); // 입력요소 블러
+        inputRef.current?.blur(); // 입력요소 블러
         setOpen(false); // 리스트 비활성화
       }
     };
 
-    document.addEventListener("keydown", shortcut);
-    return () => document.removeEventListener("keydown", shortcut);
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
   }, []);
 
   useEffect(() => {
-    // 외부 클릭 시 리스트 닫기
-    const blur = (e: MouseEvent) => {
-      if (root.current && !root.current.contains(e.target as Node)) {
+    const handleMousedown = (e: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
 
-    document.addEventListener("click", blur);
-
-    return () => {
-      document.removeEventListener("click", blur);
-    };
+    document.addEventListener("mousedown", handleMousedown);
+    return () => document.removeEventListener("mousedown", handleMousedown);
   }, []);
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.value = tempValue;
-    }
-  }, [tempValue]);
+  // useEffect(() => console.log({ open }), [open]);
+  useEffect(() => console.log({ value }), [value]);
 
   return (
     <Command
-      ref={root}
+      loop
       className={cn(
         "rounded-lg border shadow-md md:min-w-[450px]",
 
@@ -85,57 +80,79 @@ export default function CustomCommand() {
         "max-w-md h-auto /h-fit",
         open ? "" : "[&_.command-input-wrapper]:border-b-transparent"
       )}
-      loop
     >
       <CommandInput
-        ref={ref}
+        ref={inputRef}
         // 기본설정
         value={value}
         onValueChange={setValue}
         // 포커스설정
-        onFocus={() => setOpen(true)}
-        // 검색설정
+        onFocus={() => {
+          setOpen(true);
+        }}
+        // 입력요소에서 리스트가 비활성화되었다면 방향키로 열수있도록
         onKeyDown={(e) => {
+          if (e.key === "ArrowDown") {
+            setOpen(true);
+          }
           if (e.key === "Enter") {
-            // console.log("enter", value);
-            // 라우팅처리
+            setOpen(false);
           }
         }}
+
+        // 포커스설정
+        // onFocus={() => setOpen(true)}
+        // onBlur={() => setOpen(false)}
+        // 검색설정
+        // onKeyDown={(e) => {
+        //   if (e.key === "Enter") {
+        //     if (value.length > 0) {
+        //       console.log("enter", value);
+        //       // 라우팅처리
+        //       router.push(`/products?query=${value}`);
+        //       setOpen(false);
+        //     }
+        //   }
+        //   // if (e.key === "ArrowDown") {
+        //   //   inputRef.current?.focus(); // 입력요소 포커스
+        //   //   setOpen(true); // 리스트 활성화
+        //   // }
+        // }}
       />
 
-      {open && (
-        <CommandList>
-          <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
+      <CommandList className={cn(open ? "block" : "hidden")}>
+        <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
 
-          <CommandGroup heading="검색제안">
-            {items.map((item) => {
-              return (
-                <CommandItem
-                  key={item.label}
-                  value={item.label}
-                  onMouseEnter={() => setTempValue(item.label)}
-                  onSelect={(v) => {
-                    if (ref.current) {
-                      setValue(item.label);
-                      ref.current.focus(); // 입력 필드 포커스 유지
-                    }
+        <CommandGroup heading="검색제안">
+          {items.map((item) => {
+            return (
+              <CommandItem
+                key={item.label}
+                onSelect={() => {
+                  setValue(item.label);
+                  router.push(`/products?query=${item.label}`);
+                }}
+                onMouseDown={() => {
+                  setValue(item.label);
+                  router.push(`/products?query=${item.label}`);
+                }}
+                className="cursor-pointer"
+                // onMouseEnter={() => setTempValue(item.label)}
+                // disabled={item.disabled}
+              >
+                {item.icon}
+                {item.label}
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  );
+}
 
-                    // console.log({ label: item.label, v, value });
-                  }}
-
-                  // onSelect={() => setValue(item.label)}
-                  // disabled={item.disabled}
-                >
-                  {item.icon}
-                  {item.label}
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
-        </CommandList>
-      )}
-
-      {/* <CommandList>
+{
+  /* <CommandList>
         <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
 
         <CommandGroup heading="검색제안">
@@ -159,7 +176,5 @@ export default function CustomCommand() {
             );
           })}
         </CommandGroup>
-      </CommandList> */}
-    </Command>
-  );
+      </CommandList> */
 }
