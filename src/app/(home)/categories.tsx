@@ -9,7 +9,11 @@ export default function Categories() {
       {categories.map((item, index) => (
         <li key={index}>
           <Link href={`/products?category=${item.name}`}>
-            <Card className="size-[100px] dark:bg-foreground dark:text-background hover:shadow-lg hover:shadow-zinc-500/50">
+            <Card
+              className="size-[100px] hover:shadow-lg hover:shadow-zinc-500/50"
+              // dark:bg-foreground dark:text-background hover:shadow-lg hover:shadow-zinc-500/50
+              //
+            >
               <CardContent className="h-full flex flex-col justify-end /justify-center items-center gap-2  /border border-red-500">
                 <Image
                   src={item.src}

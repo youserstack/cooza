@@ -132,7 +132,7 @@
   header {
     section {
       @apply max-w-6xl mx-auto
-      border border-dashed border-zinc-500;
+      /* border border-dashed border-zinc-500; */;
     }
   }
 
@@ -142,7 +142,7 @@
 
     section {
       @apply max-w-6xl min-h-screen mx-auto 
-      border border-dashed border-zinc-500
+      /* border border-dashed border-zinc-500 */
       p-4 sm:p-6 md:p-8
       /*  */;
     }
