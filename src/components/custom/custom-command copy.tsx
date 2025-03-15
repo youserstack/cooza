@@ -99,6 +99,9 @@ export default function CustomCommand() {
             setOpen(false);
           }
         }}
+        onMouseDown={() => {
+          setOpen(true);
+        }}
 
         // 포커스설정
         // onFocus={() => setOpen(true)}
