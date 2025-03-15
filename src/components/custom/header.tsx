@@ -1,6 +1,7 @@
 import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import CartIcon from "@/components/custom/cart-icon";
-import CustomCommand from "@/components/custom/custom-command";
+import CustomCommand from "@/components/custom/custom-command copy";
+// import CustomCommand from "@/components/custom/custom-command";
 import Logo from "@/components/custom/logo";
 import { ModeToggle } from "@/components/custom/mode-toggle";
 import Nav from "@/components/custom/nav";

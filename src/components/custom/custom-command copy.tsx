@@ -31,25 +31,22 @@ const items = [
 export default function CustomCommand() {
   const [value, setValue] = useState(""); // 검색어
   const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
-  const [isComposing, setIsComposing] = useState(false); // 컴포지션(2바이트한글단어) 플래그
+  const root = useRef<HTMLInputElement>(null); // 입력요소
   const ref = useRef<HTMLInputElement>(null); // 입력요소
 
-  // 검색어변경시 입력요소의값으로 검색어를설정(자동으로변경되지않기때문에 수동으로설정해야함)
-  useEffect(() => {
-    if (ref.current && !isComposing) {
-      ref.current.value = value;
-    }
-  }, [value]);
+  const [tempValue, setTempValue] = useState("");
 
   useEffect(() => {
     const shortcut = (e: KeyboardEvent) => {
       if (e.key === "/") {
         e.preventDefault();
-        ref.current?.focus();
+        ref.current?.focus(); // 입력요소 포커스
+        setOpen(true); // 리스트 활성화
       }
       if (e.key === "Escape") {
         e.preventDefault();
-        ref.current?.blur();
+        ref.current?.blur(); // 입력요소 블러
+        setOpen(false); // 리스트 비활성화
       }
     };
 
@@ -57,8 +54,30 @@ export default function CustomCommand() {
     return () => document.removeEventListener("keydown", shortcut);
   }, []);
 
+  useEffect(() => {
+    // 외부 클릭 시 리스트 닫기
+    const blur = (e: MouseEvent) => {
+      if (root.current && !root.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("click", blur);
+
+    return () => {
+      document.removeEventListener("click", blur);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = tempValue;
+    }
+  }, [tempValue]);
+
   return (
     <Command
+      ref={root}
       className={cn(
         "rounded-lg border shadow-md md:min-w-[450px]",
 
@@ -66,26 +85,23 @@ export default function CustomCommand() {
         "max-w-md h-auto /h-fit",
         open ? "" : "[&_.command-input-wrapper]:border-b-transparent"
       )}
-      // 기본설정
-      value={value}
-      onValueChange={setValue}
-      // 포커스설정
-      onFocus={() => setOpen(true)}
-      onBlur={() => setOpen(false)}
-      // onMouseOver={() => ref.current?.focus()}
       loop
-      // 한글설정(한글은 초성, 중성, 종성을 가지기 때문에 컴포지션 이벤트가 필요)
-      onCompositionStart={() => setIsComposing(true)}
-      onCompositionEnd={() => setIsComposing(false)}
-      // 검색설정
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          // console.log("enter", value);
-          // 라우팅처리
-        }
-      }}
     >
-      <CommandInput ref={ref} />
+      <CommandInput
+        ref={ref}
+        // 기본설정
+        value={value}
+        onValueChange={setValue}
+        // 포커스설정
+        onFocus={() => setOpen(true)}
+        // 검색설정
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            // console.log("enter", value);
+            // 라우팅처리
+          }
+        }}
+      />
 
       {open && (
         <CommandList>
@@ -96,7 +112,17 @@ export default function CustomCommand() {
               return (
                 <CommandItem
                   key={item.label}
-                  // value={item.label}
+                  value={item.label}
+                  onMouseEnter={() => setTempValue(item.label)}
+                  onSelect={(v) => {
+                    if (ref.current) {
+                      setValue(item.label);
+                      ref.current.focus(); // 입력 필드 포커스 유지
+                    }
+
+                    // console.log({ label: item.label, v, value });
+                  }}
+
                   // onSelect={() => setValue(item.label)}
                   // disabled={item.disabled}
                 >
@@ -108,6 +134,32 @@ export default function CustomCommand() {
           </CommandGroup>
         </CommandList>
       )}
+
+      {/* <CommandList>
+        <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
+
+        <CommandGroup heading="검색제안">
+          {items.map((item) => {
+            return (
+              <CommandItem
+                key={item.label}
+                value={item.label}
+                onMouseEnter={() => setTempValue(item.label)}
+                onSelect={(v) => {
+                  // setValue(item.label);
+                  setTempValue(item.label);
+                  console.log({ label: item.label, v, value });
+                }}
+                // onSelect={() => setValue(item.label)}
+                // disabled={item.disabled}
+              >
+                {item.icon}
+                {item.label}
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+      </CommandList> */}
     </Command>
   );
 }
