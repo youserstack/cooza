@@ -2,7 +2,6 @@ import Categories from "@/app/(home)/categories";
 import GridBanners from "@/app/(home)/grid-banners";
 import WideBanner from "@/app/(home)/wide-banner";
 import { CustomCarousel } from "@/components/custom/custom-carousel";
-import CustomCommand from "@/components/custom/custom-command";
 import Image from "next/image";
 
 export default async function Home() {
@@ -13,7 +12,7 @@ export default async function Home() {
         <Categories />
       </section>
 
-      <WideBanner url={cannon} size={{ width: 1920, height: 800 }} />
+      <WideBanner url={cannon} size={{ width: 1920, height: 500 }} />
       {/* <WideBanner url={expo} size={{ width: 1920, height: 800 }} /> */}
       {/* <WideBanner url={iphones} size={{ width: 1920, height: 800 }} /> */}
       {/* <WideBanner url={blackFridayBanner} size={{ width: 1906, height: 711 }} /> */}

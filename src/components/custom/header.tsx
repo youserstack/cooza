@@ -1,7 +1,6 @@
 import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import CartIcon from "@/components/custom/cart-icon";
-import CustomCommand from "@/components/custom/custom-command copy";
-// import CustomCommand from "@/components/custom/custom-command";
+import CustomCommand from "@/components/custom/custom-command";
 import Logo from "@/components/custom/logo";
 import { ModeToggle } from "@/components/custom/mode-toggle";
 import Nav from "@/components/custom/nav";
@@ -15,7 +14,10 @@ export default async function Header() {
   // console.log({ session });
 
   return (
-    <header className="Header">
+    <header
+      className="Header fixed top-0 left-0 right-0 z-[100] 
+      bg-background shadow-2xl shadow-zinc-500/20 dark:shadow-zinc-500/30"
+    >
       <section className="relative overflow-visible flex items-center justify-between gap-4 p-2">
         <Logo />
         <SearchBar />
@@ -48,7 +50,10 @@ function SigninButton() {
 
 function SearchBar() {
   return (
-    <div className="SearchBar relative flex justify-center items-center z-[100]">
+    <div
+      className="SearchBar 
+      relative flex justify-center items-center z-[100]"
+    >
       <div className="h-[32px] /ring">
         <CustomCommand />
       </div>

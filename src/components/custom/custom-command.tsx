@@ -1,6 +1,6 @@
 "use client";
 
-import { Calculator, Calendar, CreditCard, Settings, Smile, User } from "lucide-react";
+import { Calculator, Calendar, CreditCard, Search, Settings, Smile, User } from "lucide-react";
 
 import {
   Command,
@@ -14,51 +14,73 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 // 표시할 항목들 (예시 데이터)
+const suggestions = [
+  "키보드",
+  "마우스",
+  "세탁세제",
+  "카메라",
+  "아이폰",
+  "아이폰 16",
+  "갤럭시",
+  "나이키",
+  // { label: "한글", disabled: false },
+  // { label: "대학교", disabled: false },
+  // { label: "서울대학교", disabled: false },
+];
+
 const items = [
-  { label: "Calculator", icon: <Calculator />, disabled: false },
-  { label: "Calendar", icon: <Calendar />, disabled: false },
-  { label: "Credit Card", icon: <CreditCard />, disabled: false },
+  //
   { label: "Settings", icon: <Settings />, disabled: false },
-  { label: "Smile", icon: <Smile />, disabled: false },
   { label: "User", icon: <User />, disabled: false },
-  { label: "한글", icon: <Smile />, disabled: false },
-  { label: "대학교", icon: <User />, disabled: false },
-  { label: "서울대학교", icon: <User />, disabled: false },
 ];
 
 export default function CustomCommand() {
   const [value, setValue] = useState(""); // 검색어
   const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
-  const [isComposing, setIsComposing] = useState(false); // 컴포지션(2바이트한글단어) 플래그
-  const ref = useRef<HTMLInputElement>(null); // 입력요소
-
-  // 검색어변경시 입력요소의값으로 검색어를설정(자동으로변경되지않기때문에 수동으로설정해야함)
-  useEffect(() => {
-    if (ref.current && !isComposing) {
-      ref.current.value = value;
-    }
-  }, [value]);
+  const inputRef = useRef<HTMLInputElement>(null); // 입력요소
+  const router = useRouter();
 
   useEffect(() => {
-    const shortcut = (e: KeyboardEvent) => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      // console.log(e.key);
+
       if (e.key === "/") {
         e.preventDefault();
-        ref.current?.focus();
+        inputRef.current?.focus(); // 입력요소 포커스
+        setOpen(true); // 리스트 활성화
       }
+
       if (e.key === "Escape") {
         e.preventDefault();
-        ref.current?.blur();
+        inputRef.current?.blur(); // 입력요소 블러
+        setOpen(false); // 리스트 비활성화
       }
     };
 
-    document.addEventListener("keydown", shortcut);
-    return () => document.removeEventListener("keydown", shortcut);
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
   }, []);
+
+  useEffect(() => {
+    const handleMousedown = (e: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleMousedown);
+    return () => document.removeEventListener("mousedown", handleMousedown);
+  }, []);
+
+  // useEffect(() => console.log({ open }), [open]);
+  useEffect(() => console.log({ value }), [value]);
 
   return (
     <Command
+      loop
       className={cn(
         "rounded-lg border shadow-md md:min-w-[450px]",
 
@@ -66,48 +88,86 @@ export default function CustomCommand() {
         "max-w-md h-auto /h-fit",
         open ? "" : "[&_.command-input-wrapper]:border-b-transparent"
       )}
-      // 기본설정
-      value={value}
-      onValueChange={setValue}
-      // 포커스설정
-      onFocus={() => setOpen(true)}
-      onBlur={() => setOpen(false)}
-      // onMouseOver={() => ref.current?.focus()}
-      loop
-      // 한글설정(한글은 초성, 중성, 종성을 가지기 때문에 컴포지션 이벤트가 필요)
-      onCompositionStart={() => setIsComposing(true)}
-      onCompositionEnd={() => setIsComposing(false)}
-      // 검색설정
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          // console.log("enter", value);
-          // 라우팅처리
-        }
-      }}
     >
-      <CommandInput ref={ref} />
+      <CommandInput
+        ref={inputRef}
+        // 기본설정
+        value={value}
+        onValueChange={setValue}
+        // 포커스설정
+        onFocus={() => {
+          setOpen(true);
+        }}
+        // 입력요소에서 리스트가 비활성화되었다면 방향키로 열수있도록
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown") {
+            setOpen(true);
+          }
+          if (e.key === "Enter") {
+            router.push(`/products?query=${value}`);
 
-      {open && (
-        <CommandList>
-          <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
+            setOpen(false);
+          }
+        }}
+        onMouseDown={() => {
+          setOpen(true);
+        }}
 
-          <CommandGroup heading="검색제안">
-            {items.map((item) => {
-              return (
-                <CommandItem
-                  key={item.label}
-                  // value={item.label}
-                  // onSelect={() => setValue(item.label)}
-                  // disabled={item.disabled}
-                >
-                  {item.icon}
-                  {item.label}
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
-        </CommandList>
-      )}
+        // 포커스설정
+        // onFocus={() => setOpen(true)}
+        // onBlur={() => setOpen(false)}
+        // 검색설정
+        // onKeyDown={(e) => {
+        //   if (e.key === "Enter") {
+        //     if (value.length > 0) {
+        //       console.log("enter", value);
+        //       // 라우팅처리
+        //       router.push(`/products?query=${value}`);
+        //       setOpen(false);
+        //     }
+        //   }
+        //   // if (e.key === "ArrowDown") {
+        //   //   inputRef.current?.focus(); // 입력요소 포커스
+        //   //   setOpen(true); // 리스트 활성화
+        //   // }
+        // }}
+      />
+
+      <CommandList className={cn(open ? "block" : "hidden")}>
+        <CommandEmpty>해당 키워드로 검색제안이 없습니다.</CommandEmpty>
+
+        <CommandGroup heading="검색제안">
+          {suggestions.map((item) => {
+            return (
+              <CommandItem
+                key={item}
+                onSelect={() => {
+                  setValue(item);
+                  router.push(`/products?query=${item}`);
+                }}
+                onMouseDown={() => {
+                  setValue(item);
+                  router.push(`/products?query=${item}`);
+                }}
+                className="cursor-pointer"
+              >
+                <Search />
+                {item}
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+        <CommandSeparator />
+
+        <CommandGroup heading="설정">
+          {items.map((item) => (
+            <CommandItem key={item.label} className="cursor-pointer">
+              {item.icon}
+              {item.label}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
     </Command>
   );
 }

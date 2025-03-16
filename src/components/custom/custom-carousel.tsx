@@ -33,16 +33,17 @@ const items = [
 ];
 
 export function CustomCarousel() {
-  // const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
 
   return (
     <Carousel
-      className="w-full h-[80px] sm:h-[150px] md:h-[250px] /max-w-2xl /max-w-xs relative"
+      className="w-full h-[80px] sm:h-[150px] md:h-[250px] 
+      /max-w-2xl /max-w-xs relative "
       opts={{ loop: true }}
-      // // plugins={[Autoplay({ delay: 1000, stopOnMouseEnter: true })]}
-      // plugins={[plugin.current]}
-      // onMouseEnter={() => plugin.current.stop()} // 마우스 올리면 멈추기
-      // onMouseLeave={() => plugin.current.play()} // 마우스 나가면 재개
+      plugins={[plugin.current]}
+      onMouseEnter={() => plugin.current.stop()} // 마우스 올리면 멈추기
+      onMouseLeave={() => plugin.current.play()} // 마우스 나가면 재개
+      // plugins={[Autoplay({ delay: 1000, stopOnMouseEnter: true })]}
     >
       <CarouselContent className="h-full">
         {items.map((item, index) => (
@@ -53,7 +54,7 @@ export function CustomCarousel() {
                 alt=""
                 width={1000}
                 height={1000}
-                className="size-full object-cover /object-contain object-center /object-scale-down"
+                className="size-full object-cover object-center rounded-lg md:rounded-xl"
               />
             </div>
           </CarouselItem>

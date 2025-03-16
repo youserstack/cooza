@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function ProductImageCard({ src }: { src: string }) {
   return (
-    <Card className="ProductImageCard md:h-[400px] overflow-hidden p-0">
+    <Card className="ProductImageCard md:h-[400px] overflow-hidden p-0!">
       <Image
         src={src}
         alt={""}

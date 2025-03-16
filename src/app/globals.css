@@ -2,7 +2,6 @@
 
 @plugin "tailwindcss-animate";
 
-/* 재확인 필요 */
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -125,6 +124,8 @@
     @apply border-border outline-ring/50;
   }
 
+  /* layout */
+
   body {
     @apply bg-background text-foreground;
   }
@@ -137,14 +138,18 @@
   }
 
   main {
-    /* @apply bg-muted; */
-    @apply bg-muted/50 dark:bg-zinc-900;
+    /* @apply bg-muted/50 dark:bg-zinc-900; */
 
     section {
       @apply max-w-6xl min-h-screen mx-auto 
-      /* border border-dashed border-zinc-500 */
       p-4 sm:p-6 md:p-8
+      /* first:mt-[110px] */
+      /* border border-dashed border-zinc-500 */
       /*  */;
+
+      &:first-child {
+        @apply mt-[110px];
+      }
     }
   }
 
@@ -155,6 +160,8 @@
       p-4 sm:p-6 md:p-8;
     }
   }
+
+  /* elements */
 
   input[type="number"] {
     &::-webkit-outer-spin-button,
