@@ -26,7 +26,10 @@ interface Props {
 export default function UserAvatar({ session, src, alt }: Props) {
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild className="cursor-pointer">
+      <DropdownMenuTrigger
+        asChild
+        className="cursor-pointer hover:ring-2 hover:ring-ring transition duration-300"
+      >
         <Avatar>
           <AvatarImage src={src} alt={alt} />
           <AvatarFallback>{session?.user?.name?.slice(0, 1).toUpperCase() || "CN"}</AvatarFallback>

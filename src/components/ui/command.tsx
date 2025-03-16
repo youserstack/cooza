@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, Slash } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
@@ -73,6 +74,16 @@ function CommandInput({
         )}
         {...props}
       />
+      <div
+        className={cn(
+          "ShortcutKey",
+          "w-8 h-6 p-2 rounded-sm mt-[1px]",
+          "flex items-center justify-center",
+          "bg-muted text-muted-foreground/80"
+        )}
+      >
+        <Slash size={12} />
+      </div>
     </div>
   );
 }

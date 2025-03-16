@@ -34,8 +34,16 @@ export default function CartPage() {
     // onSuccess: (data) => setCartGroups(data), // zustand 스토어 업데이트
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error fetching cart data</p>;
+  if (isLoading || isError) {
+    return (
+      <main>
+        <section className="min-h-screen flex items-center justify-center">
+          {isLoading && <p>로딩중...</p>}
+          {isError && <p>에러발생</p>}
+        </section>
+      </main>
+    );
+  }
 
   // 기존 groups 에 최신가격정보를 반영하기위해서 병합
   const mergedGroups = groups.map((group) => {
@@ -55,7 +63,7 @@ export default function CartPage() {
 
   return (
     <main>
-      <section>
+      <section className="min-h-screen">
         <Stepper currentStep="cart" />
 
         <ul className="flex flex-col gap-4 mt-8">

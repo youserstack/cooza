@@ -12,7 +12,12 @@ export default function CartIcon() {
     <Link href={"/cart"} className="relative">
       {/* <ShoppingCart className="text-xl  hover:text-amber-300 /hover:stroke-[0.3] transition-all duration-300" /> */}
       {/* <ShoppingBasket className="text-xl  hover:text-amber-300 /hover:stroke-[0.3] transition-all duration-300" /> */}
-      <BsHandbag className="text-xl  hover:text-amber-300 hover:stroke-[0.3] transition-all duration-300" />
+      <BsHandbag
+        className="text-xl  
+        hover:text-muted-foreground
+        /hover:text-amber-300 hover:stroke-[0.3] 
+        transition duration-300"
+      />
       <span
         className="
         absolute top-[-7px] right-[-7px]  /top-[-30%] /right-[-30%]

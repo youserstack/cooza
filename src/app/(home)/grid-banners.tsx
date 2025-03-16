@@ -56,7 +56,7 @@ function CustomImage({
       className={cn(
         className,
         "size-full object-cover object-center cursor-pointer rounded-[10px]",
-        "hover:grayscale-50 transition-all",
+        "hover:grayscale-50 transition-all duration-300",
         "hover:shadow-lg hover:shadow-zinc-500/50"
       )}
     />

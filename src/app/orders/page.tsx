@@ -29,7 +29,7 @@ export default async function OrdersPage(props: Props) {
 
   return (
     <main>
-      <section className="flex flex-col gap-6">
+      <section className="min-h-screen space-y-6">
         <h1 className="text-base text-primary font-bold">주문리스트</h1>
 
         <ul className="flex flex-col gap-4">

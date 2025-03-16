@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 // import { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 // import { formSchema } from "@/app/ordersheet/ordersheet-form";
 // import { z } from "zod";
@@ -34,6 +35,7 @@ export default function PaymentInfoCard({ form }: Props) {
   const { data: session } = useSession();
   const { productsInfo, shippingInfo, paymentInfo, setPaymentInfo } = useOrdersheetStore();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const router = useRouter();
 
   const handleOrder = async () => {
     try {
@@ -54,7 +56,7 @@ export default function PaymentInfoCard({ form }: Props) {
         status: "pending",
       };
       console.log({ ordersheet });
-      return;
+      // return;
 
       const res = await fetch("/api/orders", {
         method: "post",
@@ -62,6 +64,8 @@ export default function PaymentInfoCard({ form }: Props) {
         body: JSON.stringify(ordersheet),
       });
       if (!res.ok) throw new Error("주문에러");
+      toast.info(`${ordersheet.paymentInfo.mallName}에서 구매가 완료되었습니다.`);
+      router.push("/orders");
       // const data = await res.json();
       // console.log(data);
     } catch (error) {

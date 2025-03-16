@@ -1,8 +1,7 @@
-import { auth } from "@/app/api/auth/[...nextauth]/auth";
+// import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import db from "@/lib/configs/db";
 import Order from "@/lib/model/Order";
 import { Ordersheet } from "@/types/ordersheet";
-import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: Request) {
@@ -16,8 +15,7 @@ export async function POST(req: Request) {
     const newOrder = await Order.create(order);
     console.log({ newOrder });
 
-    redirect("/orders");
-    //   return Response.json({ order: newOrder });
+    return Response.json({ order: newOrder });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }

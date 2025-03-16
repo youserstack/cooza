@@ -33,8 +33,8 @@ const suggestions = [
 
 const items = [
   //
-  { label: "Settings", icon: <Settings />, disabled: false },
-  { label: "User", icon: <User />, disabled: false },
+  { label: "설정", icon: <Settings />, disabled: false },
+  // { label: "User", icon: <User />, disabled: false },
 ];
 
 export default function CustomCommand() {
@@ -76,7 +76,7 @@ export default function CustomCommand() {
   }, []);
 
   // useEffect(() => console.log({ open }), [open]);
-  useEffect(() => console.log({ value }), [value]);
+  // useEffect(() => console.log({ value }), [value]);
 
   return (
     <Command

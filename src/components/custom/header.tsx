@@ -7,6 +7,7 @@ import Nav from "@/components/custom/nav";
 import UserAvatar from "@/components/custom/user-avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export default function Header() {
@@ -17,11 +18,15 @@ export default function Header() {
         <SearchBar />
 
         <div className="flex items-center gap-4">
-          <ModeToggle className="hidden md:flex" />
+          <ModeToggle className="hidden md:flex transition duration-300" />
+
+          {/* mobile */}
           <UserMenu className="flex md:hidden" />
+          <HamburgerMenu />
         </div>
       </section>
 
+      {/* desktop */}
       <section className="hidden md:flex">
         <Nav />
         <UserMenu className="hidden md:flex" />
@@ -64,6 +69,14 @@ async function UserMenu({ className }: { className?: string }) {
       ) : (
         <SigninButton />
       )}
+    </div>
+  );
+}
+
+function HamburgerMenu() {
+  return (
+    <div className="hover:text-muted-foreground cursor-pointer transition-all duration-300">
+      <Menu size={20} />
     </div>
   );
 }

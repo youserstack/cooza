@@ -27,7 +27,9 @@ export default function Footer() {
         {/* right side */}
         <div
           className="flex-3
-          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
+          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6
+          [&_li]:hover:text-muted-foreground/50
+          "
         >
           <div
             className="bg-muted/50 rounded-lg p-4
@@ -121,7 +123,7 @@ function SocialIcons() {
         [&_svg]:cursor-pointer
         [&_svg]:hover:scale-110
         [&_svg]:transition
-        [&_svg]:duration-200
+        [&_svg]:duration-300
         "
     >
       <BsYoutube />
