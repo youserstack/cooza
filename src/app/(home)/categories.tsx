@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Categories() {
   return (
-    <ul className="mt-10 flex flex-wrap justify-center gap-4">
+    <ul className="flex flex-wrap justify-center gap-4">
       {categories.map((item, index) => (
         <li key={index}>
           <Link href={`/products?category=${item.name}`}>

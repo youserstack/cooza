@@ -2,12 +2,11 @@ import Categories from "@/app/(home)/categories";
 import GridBanners from "@/app/(home)/grid-banners";
 import WideBanner from "@/app/(home)/wide-banner";
 import { CustomCarousel } from "@/components/custom/custom-carousel";
-import Image from "next/image";
 
 export default async function Home() {
   return (
     <main>
-      <section className="min-h-fit">
+      <section className="min-h-fit space-y-8">
         <CustomCarousel />
         <Categories />
       </section>

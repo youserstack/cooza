@@ -9,7 +9,7 @@ interface Props {
 
 export default function WideBanner({ url, size: { width, height }, className }: Props) {
   return (
-    <section className={cn("WideBanner max-w-full min-h-auto p-0 my-10", className)}>
+    <section className={cn("WideBanner max-w-full min-h-auto p-0", className)}>
       <Image
         src={url}
         alt=""

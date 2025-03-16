@@ -12,7 +12,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="Header">
-      <section className="relative overflow-visible">
+      <section>
         <Logo />
         <SearchBar />
 

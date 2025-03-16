@@ -7,7 +7,7 @@ import { BsFacebook, BsGithub, BsYoutube } from "react-icons/bs";
 
 export default function Footer() {
   return (
-    <footer className="py-8">
+    <footer className="Footer">
       <section className="flex flex-col md:flex-row gap-10 justify-between">
         {/* left side */}
         <div
@@ -82,7 +82,10 @@ export default function Footer() {
 
       <Separator className="bg-muted-foreground/50 mx-auto max-w-7xl" decorative />
 
-      <section className="text-muted-foreground flex items-center gap-8 justify-between text-xs">
+      <section
+        className="text-muted-foreground 
+        flex items-center gap-8 justify-between text-xs"
+      >
         <p>© 2025 youserstack. All rights reserved.</p>
 
         {/* <ul className="flex items-center gap-4">

@@ -27,7 +27,7 @@ export default async function ProductsPage(props: Props) {
   // console.log({ products });
 
   return (
-    <main className="ProductsPage">
+    <main className="ProductsPage min-h-screen">
       <section className="flex flex-col items-center justify-center gap-10">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-center">
           {products.map((product) => (
