@@ -4,6 +4,7 @@ import CustomCommand from "@/components/custom/custom-command";
 import Logo from "@/components/custom/logo";
 import { ModeToggle } from "@/components/custom/mode-toggle";
 import Nav from "@/components/custom/nav";
+import SearchBar from "@/components/custom/search-bar";
 import UserAvatar from "@/components/custom/user-avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -22,7 +23,7 @@ export default function Header() {
 
           {/* mobile */}
           <UserMenu className="flex md:hidden" />
-          <HamburgerMenu />
+          <HamburgerMenu className="block md:hidden" />
         </div>
       </section>
 
@@ -43,19 +44,6 @@ function SigninButton() {
   );
 }
 
-function SearchBar() {
-  return (
-    <div
-      className="SearchBar 
-      relative flex justify-center items-center z-[100]"
-    >
-      <div className="h-[32px] /ring">
-        <CustomCommand />
-      </div>
-    </div>
-  );
-}
-
 async function UserMenu({ className }: { className?: string }) {
   const session = await auth();
   // console.log({ session });
@@ -73,9 +61,14 @@ async function UserMenu({ className }: { className?: string }) {
   );
 }
 
-function HamburgerMenu() {
+function HamburgerMenu({ className }: { className?: string }) {
   return (
-    <div className="hover:text-muted-foreground cursor-pointer transition-all duration-300">
+    <div
+      className={cn(
+        "hover:text-muted-foreground cursor-pointer transition-all duration-300",
+        className
+      )}
+    >
       <Menu size={20} />
     </div>
   );

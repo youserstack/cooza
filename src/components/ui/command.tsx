@@ -79,7 +79,8 @@ function CommandInput({
           "ShortcutKey",
           "w-8 h-6 p-2 rounded-sm mt-[1px]",
           "flex items-center justify-center",
-          "bg-muted text-muted-foreground/80"
+          "bg-muted text-muted-foreground/80",
+          "hidden md:block"
         )}
       >
         <Slash size={12} />

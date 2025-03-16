@@ -37,9 +37,15 @@ const items = [
   // { label: "User", icon: <User />, disabled: false },
 ];
 
-export default function CustomCommand() {
+interface Props {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
+}
+
+export default function CustomCommand({ className, open, setOpen }: Props) {
   const [value, setValue] = useState(""); // 검색어
-  const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
+  // const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
   const inputRef = useRef<HTMLInputElement>(null); // 입력요소
   const router = useRouter();
 
@@ -85,8 +91,9 @@ export default function CustomCommand() {
         "rounded-lg border shadow-md md:min-w-[450px]",
 
         // 추가스타일
-        "max-w-md h-auto /h-fit",
-        open ? "" : "[&_.command-input-wrapper]:border-b-transparent"
+        "h-auto",
+        open ? "" : "[&_.command-input-wrapper]:border-b-transparent",
+        className
       )}
     >
       <CommandInput
@@ -105,11 +112,11 @@ export default function CustomCommand() {
           }
           if (e.key === "Enter") {
             router.push(`/products?query=${value}`);
-
             setOpen(false);
           }
         }}
         onMouseDown={() => {
+          // console.log("mousedown open");
           setOpen(true);
         }}
 
@@ -143,10 +150,15 @@ export default function CustomCommand() {
                 key={item}
                 onSelect={() => {
                   setValue(item);
+                  setOpen(false);
                   router.push(`/products?query=${item}`);
                 }}
-                onMouseDown={() => {
+                onMouseDown={(e) => {
+                  // 마우스클릭시 셀릭트이벤트로인해 실행되지않는것으로보임, 셀렉트이벤트 막아주고 실행
+                  e.preventDefault();
                   setValue(item);
+                  setOpen(false);
+                  console.log("mousedown");
                   router.push(`/products?query=${item}`);
                 }}
                 className="cursor-pointer"

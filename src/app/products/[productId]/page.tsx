@@ -12,6 +12,15 @@ interface Data {
   product: Product;
 }
 
+// export const revalidate = 30; // 재검증시간설정 : n초동안캐시
+
+export async function generateStaticParams() {
+  const data = await fetchData(`${process.env.BASE_URL}/api/products/productIds`);
+  const productIds = data.productIds.map((v: any) => ({ productId: v.productId }));
+  // console.log({ productIds });
+  return productIds;
+}
+
 export default async function ProductDetailPage(props: Props) {
   // extract the params
   const params = await props.params;
