@@ -25,7 +25,7 @@ interface Props {
 
 export default function UserAvatar({ session, src, alt }: Props) {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild className="cursor-pointer">
         <Avatar>
           <AvatarImage src={src} alt={alt} />
