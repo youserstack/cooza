@@ -9,32 +9,22 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default async function Header() {
-  const session = await auth();
-  // console.log({ session });
-
+export default function Header() {
   return (
-    <header
-      className="Header fixed top-0 left-0 right-0 z-[100] 
-      bg-background shadow-2xl shadow-zinc-500/20 dark:shadow-zinc-500/30"
-    >
-      <section className="relative overflow-visible flex items-center justify-between gap-4 p-2">
+    <header className="Header">
+      <section className="relative overflow-visible">
         <Logo />
         <SearchBar />
-        <ModeToggle />
+
+        <div className="flex items-center gap-4">
+          <ModeToggle className="hidden md:flex" />
+          <UserMenu className="flex md:hidden" />
+        </div>
       </section>
 
-      <section className="flex justify-between items-center gap-4 p-2">
+      <section className="hidden md:flex">
         <Nav />
-        <div className="flex gap-6 items-center">
-          <CartIcon />
-
-          {session ? (
-            <UserAvatar session={session} src="https://github.com/shadcn.png" />
-          ) : (
-            <SigninButton />
-          )}
-        </div>
+        <UserMenu className="hidden md:flex" />
       </section>
     </header>
   );
@@ -57,6 +47,23 @@ function SearchBar() {
       <div className="h-[32px] /ring">
         <CustomCommand />
       </div>
+    </div>
+  );
+}
+
+async function UserMenu({ className }: { className?: string }) {
+  const session = await auth();
+  // console.log({ session });
+
+  return (
+    <div className={cn("UserMenu gap-4 items-center", className)}>
+      <CartIcon />
+
+      {session ? (
+        <UserAvatar session={session} src="https://github.com/shadcn.png" />
+      ) : (
+        <SigninButton />
+      )}
     </div>
   );
 }
