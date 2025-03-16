@@ -25,7 +25,7 @@ export default async function ProductDetailPage(props: Props) {
   // extract the params
   const params = await props.params;
   const productId = params.productId;
-  console.log({ params });
+  // console.log({ params });
 
   // fetch the data
   const url = `${process.env.BASE_URL}/api/products/${productId}`;
