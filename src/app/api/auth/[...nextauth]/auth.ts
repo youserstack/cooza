@@ -4,14 +4,19 @@ import NextAuth from "next-auth";
 import Naver from "next-auth/providers/naver";
 import { v4 as uuidv4 } from "uuid";
 
+console.log("db 1");
+await db();
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Naver],
   pages: { signIn: "/signin" }, // 커스텀 로그인 페이지 경로 지정
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
+        console.log("db 2");
         await db();
-        // console.log({ user, account, profile });
+
+        console.log({ user, account, profile });
 
         if (!account) {
           console.log("account 정보가 없습니다.");
