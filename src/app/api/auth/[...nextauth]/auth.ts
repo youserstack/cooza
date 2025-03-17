@@ -6,12 +6,85 @@ import { v4 as uuidv4 } from "uuid";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Naver],
-  // pages: { signIn: "/signin" }, // 커스텀 로그인 페이지 경로 지정
+  pages: { signIn: "/signin" }, // 커스텀 로그인 페이지 경로 지정
+  // callbacks: {
+  //   async signIn({ user, account, profile }) {
+  //     try {
+  //       await db();
+
+  //       console.log({ user, account, profile });
+
+  //       if (!account) {
+  //         console.log("account 정보가 없습니다.");
+  //         return false;
+  //       }
+
+  //       if (account.provider !== "naver") {
+  //         console.log("현재 naver 로그인만 제공됩니다.");
+  //         return false;
+  //       }
+
+  //       const foundUser = await User.findOne({ providerId: account.providerAccountId });
+  //       if (!foundUser) {
+  //         const userId = uuidv4();
+
+  //         const newUser = await User.create({
+  //           userId,
+  //           name: user.name,
+  //           email: user.email,
+  //           image: user.image,
+  //           provider: "naver",
+  //           providerId: account.providerAccountId,
+  //         });
+
+  //         user.userId = userId;
+  //         console.log({ newUser }, "신규가입으로 로그인처리");
+  //       } else {
+  //         user.userId = foundUser.userId;
+  //         console.log({ foundUser }, "기존가입으로 로그인처리");
+  //       }
+
+  //       return true;
+  //     } catch (error) {
+  //       console.log(error);
+  //       return false;
+  //     }
+  //   },
+
+  //   async jwt({ token, user }) {
+  //     // console.log("jwt", { token, user });
+
+  //     if (user) {
+  //       token.userId = user.userId;
+  //     }
+
+  //     return token;
+  //   },
+
+  //   async session({ session, token }) {
+  //     // console.log("session", { session, token });
+
+  //     if (session.user && token.userId) {
+  //       session.user.userId = token.userId as string;
+  //     }
+
+  //     return session;
+  //   },
+
+  //   // async redirect({ url, baseUrl }) {
+  //   //   return baseUrl
+  //   // },
+  // },
+
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
+        // DB 연결 로그
+        console.log("DB 연결 시작...");
         await db();
+        console.log("DB 연결 성공.");
 
+        // user, account, profile 정보 로그
         console.log({ user, account, profile });
 
         if (!account) {
@@ -24,10 +97,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return false;
         }
 
+        // 기존 유저 확인
+        console.log("기존 유저 확인 중...");
         const foundUser = await User.findOne({ providerId: account.providerAccountId });
+
         if (!foundUser) {
           const userId = uuidv4();
-
+          console.log("신규 유저 생성 중...");
           const newUser = await User.create({
             userId,
             name: user.name,
@@ -46,34 +122,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         return true;
       } catch (error) {
-        console.log(error);
+        // 오류가 발생한 경우
+        console.error("로그인 처리 중 오류 발생:", error);
         return false;
       }
     },
-
-    async jwt({ token, user }) {
-      // console.log("jwt", { token, user });
-
-      if (user) {
-        token.userId = user.userId;
-      }
-
-      return token;
-    },
-
-    async session({ session, token }) {
-      // console.log("session", { session, token });
-
-      if (session.user && token.userId) {
-        session.user.userId = token.userId as string;
-      }
-
-      return session;
-    },
-
-    // async redirect({ url, baseUrl }) {
-    //   return baseUrl
-    // },
   },
   secret: process.env.AUTH_SECRET,
 });
