@@ -6,31 +6,31 @@ import WidgetCard from "@/app/products/[productId]/widget/widget-card";
 
 // export const revalidate = 30; // 재검증시간설정 : n초동안캐시
 
-// export async function generateStaticParams() {
-//   const data = await fetchData(`${process.env.BASE_URL}/api/products/productIds`);
-//   const productIds = data.productIds.map((v: any) => ({ productId: v.productId }));
-//   // console.log({ productIds });
-//   return productIds;
-// }
+export async function generateStaticParams() {
+  const data = await fetchData(`${process.env.BASE_URL}/api/products/productIds`);
+  const productIds = data.productIds.map((v: any) => ({ productId: v.productId }));
+  // console.log({ productIds });
+  return productIds;
+}
 
 export default async function ProductDetailPage({
   params,
 }: {
   params: Promise<{ productId: string }>;
 }) {
-  // const productId = (await params).productId;
-  // const url = `${process.env.BASE_URL}/api/products/${productId}`;
-  // const {
-  //   product,
-  // }: {
-  //   product: Product;
-  // } = await fetchData(url);
-  // console.log({ productId, url });
-  // console.log({ product });
+  const productId = (await params).productId;
+  const url = `${process.env.BASE_URL}/api/products/${productId}`;
+  const {
+    product,
+  }: {
+    product: Product;
+  } = await fetchData(url);
+  console.log({ productId, url });
+  console.log({ product });
 
   return (
     <main className="ProductDetailPage">
-      {/* <section>
+      <section>
         <BreadcrumbWithSeparator category={product.category1} />
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -41,7 +41,7 @@ export default async function ProductDetailPage({
             <WidgetCard product={product} />
           </div>
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }
