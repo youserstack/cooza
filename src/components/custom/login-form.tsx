@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 import { SiNaver } from "react-icons/si";
 import SigninButton from "@/components/custom/signin-button";
-// import SigninButton from "./signin-button";
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   return (

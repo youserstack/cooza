@@ -79,11 +79,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
-        // DB 연결 로그
-        console.log("DB 연결 시작...");
-        await db();
-        console.log("DB 연결 성공.");
-
         // user, account, profile 정보 로그
         console.log({ user, account, profile });
 

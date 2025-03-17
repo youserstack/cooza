@@ -1,11 +1,8 @@
 import { LoginForm } from "@/components/custom/login-form";
-import db from "@/lib/configs/db";
 import { ShipWheel } from "lucide-react";
 import Link from "next/link";
 
-export default async function SigninPage() {
-  await db();
-
+export default function SigninPage() {
   return (
     <main className="SigninPage">
       <section className="flex flex-col items-center justify-center">
