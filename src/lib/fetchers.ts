@@ -1,17 +1,6 @@
-interface Props {
-  page?: number;
-  itemsPerPage?: number;
-  query?: string;
-  sort?: string;
-  exclude?: string;
-}
-
-interface NaverApiData {
-  lastBuildDate: string;
-  total: number;
-  start: number;
-  display: number;
-  items: Product[];
+export async function fetchData(url: string) {
+  const res = await fetch(url);
+  return res.json();
 }
 
 export async function fetchNaverShopping() {
@@ -32,6 +21,23 @@ export async function fetchNaverShopping() {
 
   return data;
 }
+
+// interface Props {
+//   page?: number;
+//   itemsPerPage?: number;
+//   query?: string;
+//   sort?: string;
+//   exclude?: string;
+// }
+
+// interface NaverApiData {
+//   lastBuildDate: string;
+//   total: number;
+//   start: number;
+//   display: number;
+//   items: Product[];
+// }
+
 // export async function fetchNaverShopping({
 //   page = 1,
 //   itemsPerPage = 10,
@@ -58,8 +64,3 @@ export async function fetchNaverShopping() {
 
 //   return data;
 // }
-
-export async function fetchData(url: string) {
-  const res = await fetch(url);
-  return res.json();
-}

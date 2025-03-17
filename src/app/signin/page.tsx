@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/custom/login-form";
-import { Earth, GalleryVerticalEnd, ShipWheel } from "lucide-react";
+import { ShipWheel } from "lucide-react";
 import Link from "next/link";
 
 export default function SigninPage() {
@@ -20,7 +20,6 @@ function Box() {
         Cooza Inc.
         {/* <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
         </div> */}
-        {/* <Earth /> */}
       </Link>
 
       <LoginForm />

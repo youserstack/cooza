@@ -1,5 +1,4 @@
 import { ModeToggle } from "@/components/custom/mode-toggle";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ShipWheel } from "lucide-react";
 import Link from "next/link";

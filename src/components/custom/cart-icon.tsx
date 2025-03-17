@@ -3,7 +3,7 @@
 import { useCartStore } from "@/lib/stores/useCartStore";
 import { BsHandbag } from "react-icons/bs";
 import Link from "next/link";
-import { ShoppingBasket, ShoppingCart } from "lucide-react";
+// import { ShoppingBasket, ShoppingCart } from "lucide-react";
 
 export default function CartIcon() {
   const { groups } = useCartStore();

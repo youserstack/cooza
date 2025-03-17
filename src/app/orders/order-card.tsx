@@ -1,14 +1,10 @@
 "use client";
 
 import { ItemImage, ItemOptions } from "@/components/custom/custom-components";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useCartStore } from "@/lib/stores/useCartStore";
-import { useOrdersheetStore } from "@/lib/stores/useOrdersheetStore";
-import { Equal, Plus, Store, X } from "lucide-react";
+import { Store } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function OrderCard({ order }: { order: Order }) {
   return (

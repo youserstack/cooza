@@ -35,13 +35,15 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
   return <li data-slot="pagination-item" {...props} />;
 }
 
-interface PaginationButtonProps
-  extends Pick<React.ComponentProps<typeof Button>, "size">,
-    React.ComponentProps<"button"> {
+function PaginationButton({
+  className,
+  isActive,
+  size = "icon",
+  ...props
+}: {
   isActive?: boolean;
-}
-
-function PaginationButton({ className, isActive, size = "icon", ...props }: PaginationButtonProps) {
+} & Pick<React.ComponentProps<typeof Button>, "size"> &
+  React.ComponentProps<"button">) {
   return (
     <button
       aria-current={isActive ? "page" : undefined}
@@ -57,9 +59,10 @@ function PaginationButton({ className, isActive, size = "icon", ...props }: Pagi
   );
 }
 
-interface PaginationArrowButtonProps extends React.ComponentProps<typeof PaginationButton> {}
-
-function PaginationPreviousJump({ className, ...props }: PaginationArrowButtonProps) {
+function PaginationPreviousJump({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationButton>) {
   return (
     <PaginationButton
       aria-label="Go to previous 10 page"
@@ -72,7 +75,10 @@ function PaginationPreviousJump({ className, ...props }: PaginationArrowButtonPr
   );
 }
 
-function PaginationPrevious({ className, ...props }: PaginationArrowButtonProps) {
+function PaginationPrevious({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationButton>) {
   return (
     <PaginationButton
       aria-label="Go to previous page"
@@ -85,7 +91,7 @@ function PaginationPrevious({ className, ...props }: PaginationArrowButtonProps)
   );
 }
 
-function PaginationNext({ className, ...props }: PaginationArrowButtonProps) {
+function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationButton>) {
   return (
     <PaginationButton
       aria-label="Go to next page"
@@ -98,7 +104,10 @@ function PaginationNext({ className, ...props }: PaginationArrowButtonProps) {
   );
 }
 
-function PaginationNextJump({ className, ...props }: PaginationArrowButtonProps) {
+function PaginationNextJump({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationButton>) {
   return (
     <PaginationButton
       aria-label="Go to next 10 page"
