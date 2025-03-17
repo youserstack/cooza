@@ -20,7 +20,7 @@ export default async function ProductsPage(props: Props) {
   const page = Number(searchParams.page) || 1;
 
   // fetch the data
-  const url = `http://localhost:3000/api/products?query=${query}&category=${category}&sort=${sort}&page=${page}`;
+  const url = `${process.env.BASE_URL}/api/products?query=${query}&category=${category}&sort=${sort}&page=${page}`;
   const { products, totalItems }: Data = await fetchData(url);
   const itemsPerPage = 10;
   const totalPages = Math.ceil(totalItems / itemsPerPage);

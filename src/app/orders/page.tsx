@@ -18,7 +18,7 @@ export default async function OrdersPage(props: Props) {
   const searchParams = await props.searchParams;
   const page = Number(searchParams.page) || 1;
 
-  const url = `http://localhost:3000/api/orders?page=${page}`;
+  const url = `${process.env.BASE_URL}/api/orders?page=${page}`;
   const res = await fetch(url, { headers: { Authorization: `Bearer ${userId}` } });
   const { orders, totalItems }: Data = await res.json();
   const totalPages = Math.ceil(totalItems / orders.length);
