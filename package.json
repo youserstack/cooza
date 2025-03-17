@@ -53,8 +53,5 @@
     "eslint-config-next": "15.2.2",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "overrides": {
-    "oauth4webapi": "npm:@jacobkim/oauth4webapi@^2.10.4"
   }
 }
