@@ -1,4 +1,4 @@
-import { auth } from "@/app/api/auth/[...nextauth]/auth";
+import { auth } from "@/auth";
 import CartIcon from "@/components/custom/cart-icon";
 import Logo from "@/components/custom/logo";
 import { ModeToggle } from "@/components/custom/mode-toggle";

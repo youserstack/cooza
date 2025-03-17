@@ -1,6 +1,6 @@
 import { Stepper } from "@/components/custom/stepper";
 import OrdersheetForm from "@/app/ordersheet/ordersheet-form";
-import { auth } from "@/app/api/auth/[...nextauth]/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default async function OrdersheetPage() {

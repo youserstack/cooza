@@ -1,4 +1,4 @@
-import { signIn } from "@/app/api/auth/[...nextauth]/auth";
+import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { IconType } from "react-icons/lib";
 

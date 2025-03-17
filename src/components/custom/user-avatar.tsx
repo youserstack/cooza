@@ -1,4 +1,4 @@
-import { signOut } from "@/app/api/auth/[...nextauth]/auth";
+import { signOut } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,

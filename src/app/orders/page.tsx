@@ -1,4 +1,4 @@
-import { auth } from "@/app/api/auth/[...nextauth]/auth";
+import { auth } from "@/auth";
 import OrderCard from "@/app/orders/order-card";
 import { ClientPagination } from "@/components/custom/client-pagination";
 

@@ -1,4 +1,4 @@
-import { signOut } from "@/app/api/auth/[...nextauth]/auth";
+import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 
 export default function SignoutButton() {
