@@ -8,11 +8,12 @@ import { Account, Profile, User as NextAuthUser } from "next-auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google, Naver],
+  secret: process.env.AUTH_SECRET,
   pages: { signIn: "/signin" }, // 커스텀 로그인 페이지 경로 지정
   callbacks: {
     async signIn({ user, account, profile }) {
       await db();
-      console.log({ user, account, profile });
+      // console.log({ user, account, profile });
 
       if (!account) {
         console.log("account 정보가 없습니다.");
@@ -20,18 +21,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       switch (account.provider) {
+        case "google":
+          return handleGoogleSignIn(user, account);
+        // console.log("google signin");
+        // return true;
         case "naver":
           return handleNaverSignIn(user, account);
-        case "google":
-          // return handleGoogleSignIn(user, account);
-          console.log("google signin");
-          return true;
         default:
           console.log("현재 naver, google 로그인만 제공됩니다.");
           return false;
       }
     },
-
     async jwt({ token, user }) {
       // console.log("jwt", { token, user });
 
@@ -41,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token;
     },
-
     async session({ session, token }) {
       // console.log("session", { session, token });
 
@@ -51,13 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return session;
     },
-
-    // async redirect({ url, baseUrl }) {
-    //   return baseUrl
-    // },
   },
-
-  secret: process.env.AUTH_SECRET,
 });
 
 async function handleNaverSignIn(user: NextAuthUser, account: Account): Promise<boolean> {
@@ -77,22 +70,22 @@ async function handleOAuthSignIn(
   try {
     await db();
 
-    // 1️⃣ providerId로 먼저 조회
+    // providerId로 먼저 조회
     let foundUser = await User.findOne({ [`providerIds.${provider}`]: account.providerAccountId });
 
-    // 2️⃣ providerId로 찾지 못하면 email로 조회
+    // providerId로 찾지 못하면 email로 조회 (예외)
     if (!foundUser && user.email) {
       foundUser = await User.findOne({ email: user.email });
 
       if (foundUser) {
-        console.log(`🔄 기존 이메일(${user.email})과 연동하여 providerId 업데이트`);
+        console.log(`기존 이메일(${user.email})과 연동하여 providerId 업데이트`);
         foundUser.provider.push(provider);
         foundUser.providerIds.set(provider, account.providerAccountId);
         await foundUser.save();
       }
     }
 
-    // 3️⃣ 기존 계정도 없으면 새로 생성
+    // 기존 계정도 없으면 새로 생성
     if (!foundUser) {
       const userId = uuidv4();
 
@@ -105,11 +98,13 @@ async function handleOAuthSignIn(
         providerIds: { [provider]: account.providerAccountId }, // 첫 로그인 providerId 저장
       });
 
-      (user as any).userId = userId;
-      console.log({ newUser }, `✨ 신규가입(${provider})으로 로그인처리`);
-    } else {
-      (user as any).userId = foundUser.userId;
-      console.log({ foundUser }, `✅ 기존가입(${provider})으로 로그인처리`);
+      user.userId = userId;
+      console.log({ newUser }, `신규가입(${provider})으로 로그인처리`);
+    }
+    // 기존 계정이 있으면
+    else {
+      user.userId = foundUser.userId;
+      console.log({ foundUser }, `기존가입(${provider})으로 로그인처리`);
     }
 
     return true;
