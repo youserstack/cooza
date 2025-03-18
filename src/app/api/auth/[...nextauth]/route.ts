@@ -1,3 +1,2 @@
-import { handlers } from "@/auth"; // auth.ts에서 가져옴
-
+import { handlers } from "@/auth";
 export const { GET, POST } = handlers;
