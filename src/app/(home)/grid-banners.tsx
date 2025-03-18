@@ -5,11 +5,11 @@ import Image from "next/image";
 export default function GridBanners() {
   return (
     <div
-      className="aspect-[11/7] 
+      className="h-full aspect-[11/7] 
         grid grid-cols-8 grid-rows-7 gap-4 my-10"
     >
       <div
-        className="col-span-2 row-span-full
+        className="h-full col-span-2 row-span-full
           grid grid-cols-1 grid-rows-8 gap-4"
       >
         <CustomImage src={gridBanners.sofa} className="col-span-1 row-span-2" />
@@ -18,7 +18,7 @@ export default function GridBanners() {
       </div>
 
       <div
-        className="col-span-4 row-span-full
+        className="h-full col-span-4 row-span-full
           grid grid-cols-2 grid-rows-8 gap-4"
       >
         <CustomImage src={gridBanners.iphone} className="col-span-2 row-span-3" />
@@ -28,7 +28,7 @@ export default function GridBanners() {
       </div>
 
       <div
-        className="col-span-2 row-span-full
+        className="h-full col-span-2 row-span-full
           grid grid-cols-1 grid-rows-8 gap-4"
       >
         <CustomImage src={gridBanners.room} className="col-span-1 row-span-2" />

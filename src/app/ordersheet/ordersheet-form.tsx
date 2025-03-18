@@ -34,26 +34,12 @@ export default function OrdersheetForm() {
       message: "",
       method: "",
       paymentTiming: "",
-      // receiver: shippingInfo.receiver,
-      // address: shippingInfo.address,
-      // phone: shippingInfo.phone,
-      // message: shippingInfo.message,
-      // method: paymentInfo.method,
-      // paymentTiming: paymentInfo.paymentTiming,
     },
   });
 
   const { productsInfo, shippingInfo, paymentInfo } = useOrdersheetStore();
 
   useEffect(() => {
-    console.log({
-      receiver: shippingInfo.receiver,
-      address: shippingInfo.address,
-      phone: shippingInfo.phone,
-      message: shippingInfo.message,
-      method: paymentInfo.method,
-      paymentTiming: paymentInfo.paymentTiming,
-    });
     form.reset({
       receiver: shippingInfo.receiver,
       address: shippingInfo.address,

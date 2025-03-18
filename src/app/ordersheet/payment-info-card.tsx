@@ -64,8 +64,8 @@ export default function PaymentInfoCard({ form }: Props) {
         body: JSON.stringify(ordersheet),
       });
       if (!res.ok) throw new Error("주문에러");
-      toast.info(`${ordersheet.paymentInfo.mallName}에서 구매가 완료되었습니다.`);
       router.push("/orders");
+      toast.info(`${ordersheet.paymentInfo.mallName}에서 구매가 완료되었습니다.`);
       // const data = await res.json();
       // console.log(data);
     } catch (error) {
