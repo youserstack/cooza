@@ -23,9 +23,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         case "naver":
           return handleNaverSignIn(user, account);
         case "google":
+          // return handleGoogleSignIn(user, account);
           console.log("google signin");
           return true;
-        // return handleGoogleSignIn(user, account);
         default:
           console.log("현재 naver, google 로그인만 제공됩니다.");
           return false;
