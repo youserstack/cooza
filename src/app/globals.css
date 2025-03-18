@@ -80,6 +80,82 @@
   --sidebar-ring: oklch(0.442 0.017 285.786);
 }
 
+/* ❌ oklch() 미지원 환경에서는 RGB 색상으로 대체 */
+
+@supports not (color: oklch(1 0 0)) {
+  :root {
+    --background: rgb(255, 255, 255);
+    --foreground: rgb(36, 36, 36);
+    --card: rgb(255, 255, 255);
+    --card-foreground: rgb(36, 36, 36);
+    --popover: rgb(255, 255, 255);
+    --popover-foreground: rgb(36, 36, 36);
+    --primary: rgb(54, 79, 199);
+    --primary-foreground: rgb(255, 255, 255);
+    --secondary: rgb(230, 230, 230);
+    --secondary-foreground: rgb(54, 79, 199);
+    --muted: rgb(230, 230, 230);
+    --muted-foreground: rgb(128, 128, 128);
+    --accent: rgb(230, 230, 230);
+    --accent-foreground: rgb(54, 79, 199);
+    --destructive: rgb(255, 85, 85);
+    --destructive-foreground: rgb(255, 255, 255);
+    --border: rgb(200, 200, 200);
+    --input: rgb(200, 200, 200);
+    --ring: rgb(150, 150, 150);
+    --chart-1: rgb(255, 200, 100);
+    --chart-2: rgb(100, 200, 255);
+    --chart-3: rgb(100, 100, 255);
+    --chart-4: rgb(200, 255, 100);
+    --chart-5: rgb(180, 240, 80);
+    --sidebar: rgb(255, 255, 255);
+    --sidebar-foreground: rgb(36, 36, 36);
+    --sidebar-primary: rgb(54, 79, 199);
+    --sidebar-primary-foreground: rgb(255, 255, 255);
+    --sidebar-accent: rgb(230, 230, 230);
+    --sidebar-accent-foreground: rgb(54, 79, 199);
+    --sidebar-border: rgb(200, 200, 200);
+    --sidebar-ring: rgb(150, 150, 150);
+  }
+}
+
+@supports not (color: oklch(0 0 0)) {
+  .dark {
+    --background: rgb(36, 36, 36);
+    --foreground: rgb(255, 255, 255);
+    --card: rgb(36, 36, 36);
+    --card-foreground: rgb(255, 255, 255);
+    --popover: rgb(36, 36, 36);
+    --popover-foreground: rgb(255, 255, 255);
+    --primary: rgb(255, 0, 0);
+    --primary-foreground: rgb(54, 79, 199);
+    --secondary: rgb(70, 70, 70);
+    --secondary-foreground: rgb(255, 0, 0);
+    --muted: rgb(70, 70, 70);
+    --muted-foreground: rgb(128, 128, 128);
+    --accent: rgb(70, 70, 70);
+    --accent-foreground: rgb(255, 0, 0);
+    --destructive: rgb(255, 100, 100);
+    --destructive-foreground: rgb(102, 50, 50);
+    --border: rgb(70, 70, 70);
+    --input: rgb(70, 70, 70);
+    --ring: rgb(100, 100, 100);
+    --chart-1: rgb(180, 100, 180);
+    --chart-2: rgb(120, 80, 255);
+    --chart-3: rgb(150, 150, 100);
+    --chart-4: rgb(90, 150, 200);
+    --chart-5: rgb(150, 100, 100);
+    --sidebar: rgb(36, 36, 36);
+    --sidebar-foreground: rgb(255, 255, 255);
+    --sidebar-primary: rgb(180, 100, 180);
+    --sidebar-primary-foreground: rgb(255, 255, 255);
+    --sidebar-accent: rgb(70, 70, 70);
+    --sidebar-accent-foreground: rgb(255, 0, 0);
+    --sidebar-border: rgb(70, 70, 70);
+    --sidebar-ring: rgb(100, 100, 100);
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
