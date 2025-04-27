@@ -12,23 +12,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: { signIn: "/signin" }, // 커스텀 로그인 페이지 경로 지정
   callbacks: {
     async signIn({ user, account, profile }) {
-      await db();
-      // console.log({ user, account, profile });
+      console.log(
+        "☑️ api/auth/[...nextauth]/route > signIn callback : provider(google, naver) 인증/인가 처리"
+      );
+      console.log("✔️ 프로바이더에서 제공한 데이터", { user, account, profile });
 
+      await db();
+
+      // ⚪ 예외처리
       if (!account) {
-        console.log("account 정보가 없습니다.");
+        console.log("❌ account 정보가 없습니다.");
         return false;
       }
 
+      // ⚪ 프로바이더에 따라서 처리
       switch (account.provider) {
         case "google":
-          return handleGoogleSignIn(user, account);
-        // console.log("google signin");
-        // return true;
+          console.log("✔️ 넥스트서버에서 구글로그인 처리중...");
+          return await handleOAuthSignIn(user, account, "google");
         case "naver":
-          return handleNaverSignIn(user, account);
+          console.log("✔️ 넥스트서버에서 네이버로그인 처리중...");
+          return await handleOAuthSignIn(user, account, "naver");
         default:
-          console.log("현재 naver, google 로그인만 제공됩니다.");
+          console.log("❌ naver, google 로그인만 제공됩니다.");
           return false;
       }
     },
@@ -53,42 +59,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });
 
-async function handleNaverSignIn(user: NextAuthUser, account: Account): Promise<boolean> {
-  return handleOAuthSignIn(user, account, "naver");
-}
-
-async function handleGoogleSignIn(user: NextAuthUser, account: Account): Promise<boolean> {
-  return handleOAuthSignIn(user, account, "google");
-}
-
-// 공통 OAuth 로그인 처리 함수
 async function handleOAuthSignIn(
   user: NextAuthUser,
   account: Account,
   provider: "naver" | "google"
 ): Promise<boolean> {
   try {
-    await db();
-
-    // providerId로 먼저 조회
+    // ⚪ 프로바이더 아이디로 먼저 조회
     let foundUser = await User.findOne({ [`providerIds.${provider}`]: account.providerAccountId });
 
-    // providerId로 찾지 못하면 email로 조회 (예외)
+    // ⚪ 프로바이더 아이디로 찾지 못하면 email로 조회
     if (!foundUser && user.email) {
       foundUser = await User.findOne({ email: user.email });
-
       if (foundUser) {
-        console.log(`기존 이메일(${user.email})과 연동하여 providerId 업데이트`);
+        console.log(`✔️ 기존 이메일(${user.email})과 연동하여 providerId 업데이트`);
         foundUser.provider.push(provider);
         foundUser.providerIds.set(provider, account.providerAccountId);
         await foundUser.save();
       }
     }
 
-    // 기존 계정도 없으면 새로 생성
+    // ⚪ 미가입자는 신규가입으로 처리
     if (!foundUser) {
       const userId = uuidv4();
-
       const newUser = await User.create({
         userId,
         name: user.name,
@@ -99,78 +92,18 @@ async function handleOAuthSignIn(
       });
 
       user.userId = userId;
-      console.log({ newUser }, `신규가입(${provider})으로 로그인처리`);
+      console.log({ newUser }, `🟢 신규가입(${provider})으로 로그인 처리`);
     }
-    // 기존 계정이 있으면
+
+    // ⚪ 기존가입자는 바로 처리
     else {
       user.userId = foundUser.userId;
-      console.log({ foundUser }, `기존가입(${provider})으로 로그인처리`);
+      console.log({ foundUser }, `🟢 기존가입(${provider})으로 로그인 처리`);
     }
 
     return true;
   } catch (error) {
-    console.log(error);
+    console.log("❌ Oauth 로그인에러", error);
     return false;
   }
 }
-
-// async function handleOAuthSignIn(
-//   user: NextAuthUser,
-//   account: Account,
-//   provider: "naver" | "google"
-// ): Promise<boolean> {
-//   try {
-//     const foundUser = await User.findOne({ providerId: account.providerAccountId });
-
-//     if (!foundUser) {
-//       const userId = uuidv4();
-
-//       const newUser = await User.create({
-//         userId,
-//         name: user.name,
-//         email: user.email,
-//         image: user.image,
-//         provider,
-//         providerId: account.providerAccountId,
-//       });
-
-//       (user as any).userId = userId;
-//       console.log({ newUser }, `신규가입(${provider})으로 로그인처리`);
-//     } else {
-//       (user as any).userId = foundUser.userId;
-//       console.log({ foundUser }, `기존가입(${provider})으로 로그인처리`);
-//     }
-
-//     return true;
-//   } catch (error) {
-//     console.log(error);
-//     return false;
-//   }
-// }
-
-// try {
-//   const foundUser = await User.findOne({ providerId: account.providerAccountId });
-//   if (!foundUser) {
-//     const userId = uuidv4();
-
-//     const newUser = await User.create({
-//       userId,
-//       name: user.name,
-//       email: user.email,
-//       image: user.image,
-//       provider: "naver",
-//       providerId: account.providerAccountId,
-//     });
-
-//     user.userId = userId;
-//     console.log({ newUser }, "신규가입으로 로그인처리");
-//   } else {
-//     user.userId = foundUser.userId;
-//     console.log({ foundUser }, "기존가입으로 로그인처리");
-//   }
-
-//   return true;
-// } catch (error) {
-//   console.log(error);
-//   return false;
-// }
