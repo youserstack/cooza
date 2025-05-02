@@ -32,11 +32,11 @@ export default function Colors() {
                 htmlFor={color.name}
                 // 아웃사이드 링
                 // 패딩으로 링사이 간격조절
-                className={`Outer_Round p-[2px] rounded-full peer-checked:ring-2 ${color.ring}`}
+                className={`Outer_Round p-[2px] border rounded-full peer-checked:ring-2 ${color.ring}`}
               >
                 <div
                   // 인사이드 링
-                  className={`Inner_Round w-8 h-8 rounded-full border-[1px] cursor-pointer ${color.bg} `}
+                  className={`Inner_Round w-8 h-8 border rounded-full cursor-pointer ${color.bg} `}
                 />
               </label>
             </div>

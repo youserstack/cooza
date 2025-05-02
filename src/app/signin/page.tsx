@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/custom/login-form";
+import { LoginForm } from "@/app/signin/login-form";
 import { ShipWheel } from "lucide-react";
 import Link from "next/link";
 
@@ -18,8 +18,6 @@ function Box() {
       <Link href="#" className="flex items-center gap-1 self-center font-medium">
         <ShipWheel />
         Cooza Inc.
-        {/* <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-        </div> */}
       </Link>
 
       <LoginForm />
