@@ -19,20 +19,21 @@ export default function Colors() {
       <fieldset className="mt-4">
         <div className="flex items-center gap-2 flex-wrap">
           {COLORS.map((color) => (
-            <div key={color.name} className="flex items-center">
+            <div key={color.name} className="flex items-center bg-black/">
               <input
                 type="radio"
                 name="color"
                 id={color.name}
                 value={color.name}
-                className="peer hidden"
+                className="peer sr-only"
+                // className="peer hidden"
               />
 
               <label
                 htmlFor={color.name}
                 // 아웃사이드 링
                 // 패딩으로 링사이 간격조절
-                className={`Outer_Round p-[2px] border rounded-full peer-checked:ring-2 ${color.ring}`}
+                className={`Outer_Round p-[2px] rounded-full peer-checked:ring-2 ${color.ring}`}
               >
                 <div
                   // 인사이드 링

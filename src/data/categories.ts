@@ -8,7 +8,7 @@ export const categories = [
     src: "https://res.cloudinary.com/dzktdrw7o/image/upload/v1741669270/cooza/banner/aa9441be0b65c8fec9b23c0c90563bdf_o9jcby.png",
   },
   {
-    name: "생활용품",
+    name: "생활/건강",
     src: "https://res.cloudinary.com/dzktdrw7o/image/upload/v1741668759/cooza/banner/Pngtree_sofa_5641036_vhk1ej.png",
   },
   {
@@ -20,7 +20,7 @@ export const categories = [
     src: "https://res.cloudinary.com/dzktdrw7o/image/upload/v1741669270/cooza/banner/aa9441be0b65c8fec9b23c0c90563bdf_o9jcby.png",
   },
   {
-    name: "생활용품",
+    name: "생활/건강",
     src: "https://res.cloudinary.com/dzktdrw7o/image/upload/v1741668759/cooza/banner/Pngtree_sofa_5641036_vhk1ej.png",
   },
   {
@@ -32,7 +32,7 @@ export const categories = [
     src: "https://res.cloudinary.com/dzktdrw7o/image/upload/v1741669270/cooza/banner/aa9441be0b65c8fec9b23c0c90563bdf_o9jcby.png",
   },
   {
-    name: "생활용품",
+    name: "생활/건강",
     src: "https://res.cloudinary.com/dzktdrw7o/image/upload/v1741668759/cooza/banner/Pngtree_sofa_5641036_vhk1ej.png",
   },
 ];

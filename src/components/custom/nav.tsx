@@ -16,7 +16,7 @@ import {
 
 export default function Nav() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="Nav">
       <NavigationMenuList>
         {/* 전체 */}
         <NavigationMenuItem>
