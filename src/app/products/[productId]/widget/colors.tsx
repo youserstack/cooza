@@ -25,8 +25,7 @@ export default function Colors() {
                 name="color"
                 id={color.name}
                 value={color.name}
-                className="peer sr-only"
-                // className="peer hidden"
+                className="peer hidden"
               />
 
               <label
