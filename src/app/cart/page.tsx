@@ -1,7 +1,7 @@
 "use client";
 
 import GroupCard from "@/app/cart/group-card";
-import { Stepper } from "@/components/custom/stepper";
+import { Stepper } from "@/components/stepper";
 import { useCartStore } from "@/lib/stores/useCartStore";
 import { extractProductIds } from "@/lib/utils/functions";
 import { useQuery } from "@tanstack/react-query";

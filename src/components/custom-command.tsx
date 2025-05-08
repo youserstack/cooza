@@ -1,7 +1,9 @@
 "use client";
 
-import { Calculator, Calendar, CreditCard, Search, Settings, Smile, User } from "lucide-react";
-
+import { useEffect, useRef, useState } from "react";
+import { Search, Settings } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   Command,
   CommandEmpty,
@@ -12,11 +14,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 
-// 표시할 항목들 (예시 데이터)
 const suggestions = [
   "키보드",
   "마우스",
@@ -26,26 +24,20 @@ const suggestions = [
   "아이폰 16",
   "갤럭시",
   "나이키",
-  // { label: "한글", disabled: false },
-  // { label: "대학교", disabled: false },
-  // { label: "서울대학교", disabled: false },
 ];
 
-const items = [
-  //
-  { label: "설정", icon: <Settings />, disabled: false },
-  // { label: "User", icon: <User />, disabled: false },
-];
+const items = [{ label: "설정", icon: <Settings /> }];
 
-interface Props {
+export default function CustomCommand({
+  className,
+  open,
+  setOpen,
+}: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
-}
-
-export default function CustomCommand({ className, open, setOpen }: Props) {
+}) {
   const [value, setValue] = useState(""); // 검색어
-  // const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
   const inputRef = useRef<HTMLInputElement>(null); // 입력요소
   const router = useRouter();
 
@@ -81,16 +73,11 @@ export default function CustomCommand({ className, open, setOpen }: Props) {
     return () => document.removeEventListener("mousedown", handleMousedown);
   }, []);
 
-  // useEffect(() => console.log({ open }), [open]);
-  // useEffect(() => console.log({ value }), [value]);
-
   return (
     <Command
       loop
       className={cn(
         "rounded-lg border shadow-md md:min-w-[450px]",
-
-        // 추가스타일
         "h-auto",
         open ? "" : "[&_.command-input-wrapper]:border-b-transparent",
         className
@@ -98,13 +85,10 @@ export default function CustomCommand({ className, open, setOpen }: Props) {
     >
       <CommandInput
         ref={inputRef}
-        // 기본설정
         value={value}
         onValueChange={setValue}
-        // 포커스설정
-        onFocus={() => {
-          setOpen(true);
-        }}
+        onFocus={() => setOpen(true)}
+        onMouseDown={() => setOpen(true)}
         // 입력요소에서 리스트가 비활성화되었다면 방향키로 열수있도록
         onKeyDown={(e) => {
           if (e.key === "ArrowDown") {
@@ -115,12 +99,7 @@ export default function CustomCommand({ className, open, setOpen }: Props) {
             setOpen(false);
           }
         }}
-        onMouseDown={() => {
-          // console.log("mousedown open");
-          setOpen(true);
-        }}
 
-        // 포커스설정
         // onFocus={() => setOpen(true)}
         // onBlur={() => setOpen(false)}
         // 검색설정
@@ -171,7 +150,7 @@ export default function CustomCommand({ className, open, setOpen }: Props) {
         </CommandGroup>
         <CommandSeparator />
 
-        <CommandGroup heading="설정">
+        <CommandGroup heading="설정" onMouseDown={() => setOpen(false)}>
           {items.map((item) => (
             <CommandItem key={item.label} className="cursor-pointer">
               {item.icon}

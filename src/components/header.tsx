@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
-import CartIcon from "@/components/custom/cart-icon";
-import Logo from "@/components/custom/logo";
-import { ModeToggle } from "@/components/custom/mode-toggle";
-import Nav from "@/components/custom/nav";
-import SearchBar from "@/components/custom/search-bar";
-import UserAvatar from "@/components/custom/user-avatar";
+import CartIcon from "@/components/cart-icon";
+import Logo from "@/components/logo";
+import { ModeToggle } from "@/components/mode-toggle";
+import Nav from "@/components/nav";
+import SearchBar from "@/components/search-bar";
+import UserAvatar from "@/components/user-avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
@@ -16,10 +16,8 @@ export default function Header() {
       <section>
         <Logo />
         <SearchBar />
-
         <div className="flex items-center gap-4">
           <ModeToggle className="hidden md:flex transition duration-300" />
-
           {/* mobile */}
           <UserMenu className="flex md:hidden" />
           <HamburgerMenu className="block md:hidden" />
@@ -35,14 +33,6 @@ export default function Header() {
   );
 }
 
-function SigninButton() {
-  return (
-    <Button size={"sm"} asChild>
-      <Link href={"/signin"}>로그인</Link>
-    </Button>
-  );
-}
-
 async function UserMenu({ className }: { className?: string }) {
   const session = await auth();
   // console.log({ session });
@@ -50,13 +40,20 @@ async function UserMenu({ className }: { className?: string }) {
   return (
     <div className={cn("UserMenu gap-4 items-center", className)}>
       <CartIcon />
-
       {session ? (
         <UserAvatar session={session} src="https://github.com/shadcn.png" />
       ) : (
-        <SigninButton />
+        <SignInButton />
       )}
     </div>
+  );
+}
+
+function SignInButton() {
+  return (
+    <Button size={"sm"} asChild>
+      <Link href={"/signin"}>로그인</Link>
+    </Button>
   );
 }
 

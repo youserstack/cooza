@@ -1,21 +1,20 @@
 "use client";
 
-import CustomCommand from "@/components/custom/custom-command";
+import CustomCommand from "@/components/custom-command";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 import { useState } from "react";
 
 export default function SearchBar() {
-  // const [focus, setFocus] = useState(false);
-  const [open, setOpen] = useState(false); // 리스트 활성여부 플래그
+  const [open, setOpen] = useState(false);
 
   return (
     <div
       className={cn(
         "SearchBar group z-100",
-        open ? "fixed inset-0 md:relative" : "relative", // position
-        open ? "p-2 md:p-0" : "p-0", // padding
+        open ? "fixed inset-0 md:relative" : "relative",
+        open ? "p-2 md:p-0" : "p-0",
         "flex flex-col justify-between items-start md:items-center",
         "w-full md:w-fit"
       )}
@@ -23,7 +22,7 @@ export default function SearchBar() {
       <div
         className={cn(
           "SearchBar-Background absolute inset-0 bg-black/70 z-10",
-          open ? "block md:hidden" : "hidden" // display
+          open ? "block md:hidden" : "hidden"
         )}
         onClick={() => setOpen(false)}
       ></div>
@@ -38,7 +37,7 @@ export default function SearchBar() {
       <Button
         className={cn(
           "SearchBar-CloseButton z-10",
-          open ? "flex md:hidden justify-center items-center self-end" : "hidden" // display
+          open ? "flex md:hidden justify-center items-center self-end" : "hidden"
         )}
         onClick={() => setOpen(false)}
         variant={"secondary"}

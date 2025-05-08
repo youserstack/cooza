@@ -1,6 +1,6 @@
 "use client";
 
-import { ItemImage, ItemOptions } from "@/components/custom/custom-components";
+import { ItemImage, ItemOptions } from "@/components/custom-components";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Store } from "lucide-react";

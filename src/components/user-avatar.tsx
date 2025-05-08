@@ -89,13 +89,13 @@ export default function UserAvatar({ session, src, alt }: Props) {
         <DropdownMenuItem disabled>API</DropdownMenuItem>
         <DropdownMenuSeparator /> */}
 
-        <SignoutButton />
+        <SignOutButton />
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
-function SignoutButton() {
+function SignOutButton() {
   const action = async () => {
     "use server";
     await signOut({ redirectTo: "/" });

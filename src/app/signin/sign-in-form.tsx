@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 import { SiNaver } from "react-icons/si";
-import SigninButton from "@/components/custom/signin-button";
+import SignInButton from "@/components/sign-in-button";
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+export function SignInForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -32,8 +32,8 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 function Oauth() {
   return (
     <div className="Oauth flex flex-col gap-4">
-      <SigninButton provider="google" label="구글로 로그인" Icon={FcGoogle} />
-      <SigninButton
+      <SignInButton provider="google" label="구글로 로그인" Icon={FcGoogle} />
+      <SignInButton
         provider="naver"
         label="네이버로 로그인"
         Icon={SiNaver}

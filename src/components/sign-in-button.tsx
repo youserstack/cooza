@@ -9,7 +9,7 @@ interface Props {
   iconClassName?: string;
 }
 
-export default function SigninButton({ provider, label, Icon, iconClassName }: Props) {
+export default function SignInButton({ provider, label, Icon, iconClassName }: Props) {
   const action = async () => {
     "use server";
     await signIn(provider, { redirectTo: "/" });

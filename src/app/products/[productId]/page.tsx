@@ -1,5 +1,5 @@
 import ProductImageCard from "@/app/products/[productId]/product-image-card";
-import { BreadcrumbWithSeparator } from "@/components/custom/breadcrumb-with-separator";
+import { BreadcrumbWithSeparator } from "@/components/breadcrumb-with-separator";
 import { fetchData } from "@/lib/fetchers";
 import ProductInfoCard from "@/app/products/[productId]/product-info-card";
 import WidgetCard from "@/app/products/[productId]/widget/widget-card";

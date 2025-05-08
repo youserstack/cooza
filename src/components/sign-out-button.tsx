@@ -1,7 +1,7 @@
 import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 
-export default function SignoutButton() {
+export default function SignOutButton() {
   const action = async () => {
     "use server";
     await signOut({ redirectTo: "/" });

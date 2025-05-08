@@ -1,5 +1,5 @@
-import { ItemImage } from "@/components/custom/custom-components";
-import ResponsiveSeparator from "@/components/custom/responsive-separator";
+import { ItemImage } from "@/components/custom-components";
+import ResponsiveSeparator from "@/components/responsive-separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useOrdersheetStore } from "@/lib/stores/useOrdersheetStore";

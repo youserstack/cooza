@@ -1,4 +1,4 @@
-import KeepButton from "@/components/custom/keep-button";
+import KeepButton from "@/components/keep-button";
 import {
   Card,
   CardContent,

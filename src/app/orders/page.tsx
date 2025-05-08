@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import OrderCard from "@/app/orders/order-card";
-import { ClientPagination } from "@/components/custom/client-pagination";
+import { ClientPagination } from "@/components/client-pagination";
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

@@ -1,7 +1,7 @@
 import Categories from "@/app/(home)/categories";
 import GridBanners from "@/app/(home)/grid-banners";
 import WideBanner from "@/app/(home)/wide-banner";
-import { CustomCarousel } from "@/components/custom/custom-carousel";
+import { CustomCarousel } from "@/components/custom-carousel";
 
 export default async function Home() {
   return (

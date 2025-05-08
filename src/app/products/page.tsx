@@ -1,6 +1,6 @@
-import ProductCard from "@/components/custom/product-card";
+import ProductCard from "@/components/product-card";
 import { fetchData } from "@/lib/fetchers";
-import { ClientPagination } from "@/components/custom/client-pagination";
+import { ClientPagination } from "@/components/client-pagination";
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
