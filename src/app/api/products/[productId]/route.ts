@@ -1,12 +1,14 @@
 import db from "@/lib/configs/db";
 import Product from "@/lib/model/Product";
 
-export async function GET(req: Request, { params }: { params: Promise<{ productId: string }> }) {
+type Params = Promise<{ productId: string }>;
+
+export async function GET(req: Request, segmentData: { params: Params }) {
   try {
     await db();
 
-    // extract
-    const { productId } = await params;
+    const params = await segmentData.params;
+    const { productId } = params;
 
     const product = await Product.findOne({ productId });
     if (!product) return Response.json({ msg: "not found" }, { status: 404 });

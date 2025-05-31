@@ -1,43 +1,21 @@
-import ProductCard from "@/components/product-card";
-import { fetchData } from "@/lib/fetchers";
-import { ClientPagination } from "@/components/client-pagination";
+import ProductList from "@/components/product-list";
+import { Suspense } from "react";
 
-interface Props {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-interface Data {
-  products: Product[];
-  totalItems: number;
-}
-
-export default async function ProductsPage(props: Props) {
-  // extract the search params
+export default async function ProductsPage(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams;
-  const query = searchParams.query || "";
-  const category = searchParams.category || "";
-  const sort = searchParams.sort || "";
+  const query = (searchParams.query as string) || "";
+  const category = (searchParams.category as string) || "";
+  const sort = (searchParams.sort as string) || "";
   const page = Number(searchParams.page) || 1;
-
-  // fetch the data
-  const url = `${process.env.BASE_URL}/api/products?query=${query}&category=${category}&sort=${sort}&page=${page}`;
-  const { products, totalItems }: Data = await fetchData(url);
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  // console.log({ products });
 
   return (
     <main className="ProductsPage min-h-screen">
       <section className="flex flex-col items-center justify-center gap-10">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-center">
-          {products.map((product) => (
-            <li key={product.productId}>
-              <ProductCard product={product} />
-            </li>
-          ))}
-        </ul>
-
-        <ClientPagination page={page} totalPages={totalPages} />
+        <Suspense fallback={<div>loading...</div>}>
+          <ProductList query={query} category={category} sort={sort} page={page} />
+        </Suspense>
       </section>
     </main>
   );

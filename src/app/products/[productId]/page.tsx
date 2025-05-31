@@ -5,19 +5,14 @@ import ProductInfoCard from "@/app/products/[productId]/product-info-card";
 import WidgetCard from "@/app/products/[productId]/widget/widget-card";
 
 // export const revalidate = 30; // 재검증시간설정 : n초동안캐시
+type Params = Promise<{ productId: string }>;
 
 export async function generateStaticParams() {
-  const data = await fetchData(`${process.env.BASE_URL}/api/products/productIds`);
-  const productIds = data.productIds.map((v: any) => ({ productId: v.productId }));
-  // console.log({ productIds });
-  return productIds;
+  const { productIds } = await fetchData(`${process.env.BASE_URL}/api/productIds`);
+  return productIds.map((v: any) => ({ productId: v.productId }));
 }
 
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ productId: string }>;
-}) {
+export default async function ProductDetailPage({ params }: { params: Params }) {
   const productId = (await params).productId;
   const url = `${process.env.BASE_URL}/api/products/${productId}`;
   const {

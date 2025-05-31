@@ -39,14 +39,7 @@ export default function GridBanners() {
   );
 }
 
-function CustomImage({
-  src,
-  className,
-}: {
-  src: string;
-  className: string;
-  // size?: { width: number; height: number };
-}) {
+function CustomImage({ src, className }: { src: string; className: string }) {
   return (
     <Image
       src={src}

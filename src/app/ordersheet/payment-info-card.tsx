@@ -21,6 +21,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { createOrder } from "@/lib/fetchers";
 // import { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 // import { formSchema } from "@/app/ordersheet/ordersheet-form";
 // import { z } from "zod";
@@ -38,11 +39,9 @@ export default function PaymentInfoCard({ form }: Props) {
   const router = useRouter();
 
   const handleOrder = async () => {
-    try {
-      if (!session) throw new Error("로그인 후 주문가능합니다.");
+    if (!session) throw new Error("로그인 후 주문가능합니다.");
 
-      // extract
-      // const values = form.getValues();
+    try {
       const ordersheet: Ordersheet = {
         userId: session.user.userId,
         productsInfo,
@@ -56,18 +55,11 @@ export default function PaymentInfoCard({ form }: Props) {
         status: "pending",
       };
       console.log({ ordersheet });
-      // return;
 
-      const res = await fetch("/api/orders", {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ordersheet),
-      });
-      if (!res.ok) throw new Error("주문에러");
+      await createOrder(ordersheet);
+
       router.push("/orders");
       toast.info(`${ordersheet.paymentInfo.mallName}에서 구매가 완료되었습니다.`);
-      // const data = await res.json();
-      // console.log(data);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
