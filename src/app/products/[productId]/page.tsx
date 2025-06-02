@@ -7,10 +7,10 @@ import WidgetCard from "@/app/products/[productId]/widget/widget-card";
 // export const revalidate = 30; // 재검증시간설정 : n초동안캐시
 type Params = Promise<{ productId: string }>;
 
-// export async function generateStaticParams() {
-//   const { productIds } = await fetchData(`${process.env.BASE_URL}/api/productIds`);
-//   return productIds.map((v: any) => ({ productId: v.productId }));
-// }
+export async function generateStaticParams() {
+  const { productIds } = await fetchData(`${process.env.BASE_URL}/api/productIds`);
+  return productIds.map((v: any) => ({ productId: v.productId }));
+}
 
 export default async function ProductDetailPage({ params }: { params: Params }) {
   const productId = (await params).productId;
