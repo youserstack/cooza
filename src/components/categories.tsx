@@ -5,29 +5,23 @@ import Link from "next/link";
 
 export default function Categories() {
   return (
-    <ul className="flex flex-wrap justify-center gap-4">
-      {categories.map((item, index) => (
-        <li key={index}>
-          <Link href={`/products?category=${item.name}`}>
-            <Card
-              className="size-[100px] hover:shadow-lg hover:shadow-zinc-500/50"
-              // dark:bg-foreground dark:text-background hover:shadow-lg hover:shadow-zinc-500/50
-              //
-            >
-              <CardContent className="h-full flex flex-col justify-end /justify-center items-center gap-2  /border border-red-500">
-                <Image
-                  src={item.src}
-                  alt=""
-                  width={300}
-                  height={300}
-                  className="object-cover object-center"
-                />
-                <p className="text-xs text-nowrap/ whitespace-nowrap">{item.name}</p>
-              </CardContent>
-            </Card>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <section className="mt-[2vw]">
+      <ul className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
+        {categories.map((item, index) => (
+          <li key={index}>
+            <Link href={`/products?category=${item.name}`}>
+              <Card className="size-full">
+                <CardContent>
+                  <div className="relative ">
+                    <Image src={item.src} alt="" width={300} height={300} />
+                  </div>
+                  <p className="text-xs mt-[2.5vw] text-center">{item.name}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

@@ -1,43 +1,57 @@
-import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+import { create } from "zustand";
 
-interface OrdersheetStore {
-  productsInfo: ProductsInfo;
-  shippingInfo: ShippingInfo;
-  paymentInfo: PaymentInfo;
-
-  setProductsInfo: (info: ProductsInfo) => void;
-  setShippingInfo: (info: Partial<ShippingInfo>) => void;
-  setPaymentInfo: (info: Partial<PaymentInfo>) => void;
-}
-
-export const useOrdersheetStore = create<OrdersheetStore>()(
+export const useOrdersheetStore = create<OrdersheetStoreType>()(
   persist(
     immer((set) => ({
-      productsInfo: [],
-      shippingInfo: { receiver: "", address: "", phone: "", message: "" },
-      paymentInfo: { mallName: "", method: "", paymentTiming: "", amount: 0 },
+      // 주문서 상태
+      cartList: [],
+      payment: {
+        price: 0,
+        total: 0,
+        mallName: "",
+        method: "",
+        paymentTiming: "",
+        amount: 0,
+      },
+      shipping: {
+        receiver: "",
+        address: "",
+        phone: "",
+        message: "",
+      },
 
-      setProductsInfo: (info) => {
+      // ✅ 카트에 아이템 추가
+      addToCart: (item) =>
         set((state) => {
-          state.productsInfo = info;
-        });
-      },
-      setShippingInfo: (info) => {
+          state.cartList.push(item);
+        }),
+
+      // ✅ 카트에서 아이템 제거
+      removeFromCart: (index) =>
         set((state) => {
-          state.shippingInfo = { ...state.shippingInfo, ...info };
-        });
-      },
-      setPaymentInfo: (info) => {
+          state.cartList.splice(index, 1);
+        }),
+
+      // ✅ 결제 정보 업데이트
+      updatePayment: (payment) =>
         set((state) => {
-          state.paymentInfo = { ...state.paymentInfo, ...info };
-        });
-      },
+          state.payment = { ...state.payment, ...payment };
+        }),
+
+      // ✅ 배송 정보 업데이트
+      updateShipping: (shipping) =>
+        set((state) => {
+          state.shipping = { ...state.shipping, ...shipping };
+        }),
+
+      // ✅ 초기화
+      resetOrdersheet: () => set(() => {}),
     })),
     {
-      name: "ordersheet-storage", // 저장소 키 이름 (sessionStorage 또는 localStorage에 저장될 키)
-      storage: createJSONStorage(() => sessionStorage), // sessionStorage를 저장소로 사용
+      name: "ordersheet-storage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

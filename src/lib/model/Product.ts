@@ -1,29 +1,12 @@
-import { Document, Schema, models, model } from "mongoose";
+import { Schema, models, model, InferSchemaType } from "mongoose";
 
-export interface IProduct extends Document {
-  title: string;
-  link: string;
-  image: string;
-  lprice: number;
-  hprice?: number | null;
-  mallName: string;
-  productId: string;
-  productType: number;
-  brand: string;
-  maker: string;
-  category1: string;
-  category2: string;
-  category3?: string;
-  category4?: string;
-}
-
-const ProductSchema: Schema = new Schema<IProduct>(
+const ProductSchema = new Schema(
   {
     title: { type: String, required: true },
     link: { type: String, required: true },
     image: { type: String, required: true },
+    price: { type: Number, required: true },
     lprice: { type: Number, required: true },
-    hprice: { type: Number, default: null }, // 빈 문자열 대신 null 허용
     mallName: { type: String, required: true },
     productId: { type: String, required: true, unique: true },
     productType: { type: Number, required: true },
@@ -39,5 +22,7 @@ const ProductSchema: Schema = new Schema<IProduct>(
   }
 );
 
-const Product = models.Product || model<IProduct>("Product", ProductSchema);
+export type ProductType = InferSchemaType<typeof ProductSchema>; // 자동 추론
+const Product = models.Product || model<ProductType>("Product", ProductSchema);
+
 export default Product;

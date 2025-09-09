@@ -1,64 +1,33 @@
-import KeepButton from "@/components/keep-button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import AddToCartButton from "@/components/buttons/add-to-cart-button";
 import Image from "next/image";
 import Link from "next/link";
-import { IoIosStar } from "react-icons/io";
 
-interface Props {
-  product: Product;
-}
-
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product }: { product: ProductType }) {
   return (
-    <Link href={`/products/${product.productId}`} className="block h-full">
-      <Card className="h-full overflow-hidden pt-0 gap-3">
-        <CardHeader className="text-[13px] p-0 font-bold relative">
-          <Image
-            src={product.image}
-            alt=""
-            width={300}
-            height={300}
-            className="w-full max-h-none sm:max-h-[200px] md:max-h-[150px] /max-h-[200px]  object-cover"
-          />
-          <KeepButton product={product} className="absolute bottom-4 right-4 p-2" />
-        </CardHeader>
+    <Link href={`/products/${product.productId}`} className="block">
+      {/* 제품이미지 */}
+      <div className="relative rounded-lg overflow-hidden">
+        <Image src={product.image} alt="" width={300} height={300} />
 
-        <CardContent className="px-4">
-          <h3>{product.brand}</h3>
-          <CardTitle className="font-normal truncate mt-2">{product.title}</CardTitle>
-          <CardDescription></CardDescription>
-        </CardContent>
+        {/* 카트버튼 */}
+        <div
+          className="absolute right-1 bottom-1 
+          flex items-center justify-center 
+          overflow-hidden"
+        >
+          <AddToCartButton product={product} />
+        </div>
+      </div>
 
-        <CardFooter className="flex justify-between px-4">
-          <Price price={product.lprice} />
-          <Rating />
-        </CardFooter>
-      </Card>
+      {/* 설명부분 */}
+      <div className="p-2">
+        <h3 className="text-[11px] font-semibold">{product.brand}</h3>
+        <h1 className="text-[12px] truncate">{product.title}</h1>
+        <div className="flex gap-1 items-end">
+          <p className="text-[13px] font-semibold">0000000 원</p>
+          <p className="text-[10px] mb-[2px]">배송비 3,000원</p>
+        </div>
+      </div>
     </Link>
-  );
-}
-
-function Price({ price }: { price: string }) {
-  return (
-    <div>
-      <h1 className="text-md font-bold">{price} 원</h1>
-      <p className="text-xs text-zinc-700 dark:text-zinc-400">배송비 3,000원</p>
-    </div>
-  );
-}
-
-function Rating() {
-  return (
-    <div className="Rating flex items-center gap-[3px]">
-      <IoIosStar className="text-red-500" />
-      <span>{Math.floor(Math.random() * 5) + 1}</span>
-    </div>
   );
 }

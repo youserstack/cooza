@@ -1,11 +1,12 @@
+import OrdersheetForm from "@/components/forms/ordersheet-form/ordersheet-form";
 import { Stepper } from "@/components/stepper";
-import OrdersheetForm from "@/app/ordersheet/ordersheet-form";
-import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
+// 주문서 페이지
 export default async function OrdersheetPage() {
+  // 인증 확인
   const session = await auth();
-
   if (!session) redirect("/signin");
 
   return (

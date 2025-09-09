@@ -1,6 +1,8 @@
 import ProductCard from "@/components/product-card";
-import { fetchData } from "@/lib/fetchers";
-import { ClientPagination } from "@/components/client-pagination";
+import { getProductList } from "@/lib/fetchers/product";
+import Pagination from "@/components/pagination";
+
+const itemsPerPage = 10;
 
 export default async function ProductList({
   query,
@@ -13,24 +15,24 @@ export default async function ProductList({
   sort: string;
   page: number;
 }) {
-  const params = new URLSearchParams({ query, category, sort, page: page.toString() });
-  const url = `${process.env.BASE_URL}/api/products?${params.toString()}`;
-  const { products, totalItems } = await fetchData(url);
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  // console.log({ products });
+  const { products, totalItems } = await getProductList({
+    category,
+    page: String(page),
+    query,
+    sort,
+  });
 
   return (
     <div>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-center">
-        {products.map((product: Product) => (
+      <ul className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+        {products.map((product: ProductType) => (
           <li key={product.productId}>
             <ProductCard product={product} />
           </li>
         ))}
       </ul>
 
-      <ClientPagination page={page} totalPages={totalPages} />
+      <Pagination totalPages={Math.ceil(totalItems / itemsPerPage)} />
     </div>
   );
 }

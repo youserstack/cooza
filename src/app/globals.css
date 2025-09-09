@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
 /* 커스텀 색상 변수 정의 */
 @layer base {
   :root {
@@ -198,16 +202,16 @@
     @apply shadow-2xl shadow-zinc-500/20 dark:shadow-zinc-500/30;
 
     > section {
-      @apply flex items-center justify-between gap-4;
-      /* @apply relative overflow-visible; */
+      @apply flex items-center;
     }
   }
 
   main {
     @apply space-y-8;
 
-    > section:first-child {
-      @apply mt-[50px] md:mt-[100px];
+    > section:first-of-type {
+      @apply min-h-[calc(100vh-70px)];
+      @apply mt-[50px] md:mt-[70px];
     }
   }
 

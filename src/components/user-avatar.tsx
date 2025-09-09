@@ -1,4 +1,4 @@
-import { signOut } from "@/auth";
+import SignOutButton from "@/components/sign-out-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -6,106 +6,65 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Session } from "next-auth";
 import Link from "next/link";
+import NotificationCount from "@/components/notification-count";
 
-interface Props {
+export default function UserAvatar({
+  session,
+  src,
+  alt,
+}: {
   session: Session;
   src: string;
   alt?: string;
-}
-
-export default function UserAvatar({ session, src, alt }: Props) {
+}) {
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger
-        asChild
-        className="cursor-pointer hover:ring-2 hover:ring-ring transition duration-300"
-      >
-        <Avatar>
-          <AvatarImage src={src} alt={alt} />
-          <AvatarFallback>{session?.user?.name?.slice(0, 1).toUpperCase() || "CN"}</AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger asChild>
+        <div className="relative">
+          <Avatar className="cursor-pointer hover:ring-2 hover:ring-ring transition duration-300 size-[24px]">
+            <AvatarImage src={src} alt={alt} />
+            <AvatarFallback>
+              {session?.user?.name?.slice(0, 1).toUpperCase() || "CN"}
+            </AvatarFallback>
+          </Avatar>
+
+          {/* 알림표시 */}
+          {/* <div className="absolute top-0 left-0 size-2 rounded-full bg-red-500"></div> */}
+          {/* <NotificationCount /> */}
+        </div>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56 [&_a]:cursor-pointer">
+        {/* 회원정보 */}
         <DropdownMenuLabel>{session?.user?.email || "My Account"}</DropdownMenuLabel>
+
         <DropdownMenuSeparator />
 
+        {/* 메뉴 */}
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            프로필
-            {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
-          </DropdownMenuItem>
-
           <DropdownMenuItem asChild>
-            <Link href={"/orders"}>
-              주문내역
-              {/* <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> */}
-            </Link>
+            <Link href={"/cart"}>장바구니</Link>
           </DropdownMenuItem>
-
-          <DropdownMenuItem>
-            설정
-            {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+          <DropdownMenuItem asChild>
+            <Link href={"/orders"}>주문내역</Link>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
+          {/* <DropdownMenuItem>설정</DropdownMenuItem> */}
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
 
-        {/* <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            New Team
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
+        {/* 로그아웃 */}
+        <DropdownMenuGroup>
+          <SignOutButton />
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
 
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator /> */}
-
-        <SignOutButton />
+        {/* <DropdownMenuSeparator /> */}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-}
-
-function SignOutButton() {
-  const action = async () => {
-    "use server";
-    await signOut({ redirectTo: "/" });
-  };
-
-  return (
-    <form action={action}>
-      <DropdownMenuItem asChild className="size-full cursor-pointer">
-        <button type="submit">로그아웃</button>
-      </DropdownMenuItem>
-    </form>
   );
 }

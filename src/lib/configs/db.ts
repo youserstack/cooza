@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI as string;
 if (!MONGODB_URI) throw new Error("환경변수 MONGODB_URI가 설정되지 않았습니다.");
 
-let cached = (global as any).mongoose;
-if (!cached) cached = (global as any).mongoose = { conn: null, promise: null };
+if (!global.mongoose) global.mongoose = { conn: null, promise: null };
+const cached = global.mongoose;
 
 export default async function db() {
   // 이미 연결된 경우 연결을 반환합니다.

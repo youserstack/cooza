@@ -1,64 +1,51 @@
 "use client";
 
-import GroupCard from "@/app/cart/group-card";
 import { Stepper } from "@/components/stepper";
-import { fetchData } from "@/lib/fetchers";
+// import { useCartQuery } from "@/lib/hooks/use-cart-query";
 import { useCartStore } from "@/lib/stores/useCartStore";
-import { extractProductIds } from "@/lib/utils/functions";
-import { useQuery } from "@tanstack/react-query";
+import { formatCurrency } from "@/lib/utils/format-currency";
+import { X } from "lucide-react";
 
-export default function CartPage() {
-  const { groups } = useCartStore();
+// 장바구니 페이지
+export default function Page() {
+  const { cartList, removeFromCart } = useCartStore();
+  console.log({ cartList });
 
-  // 중복 제거된 productId 목록 추출
-  const productIds = extractProductIds(groups);
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => {
-      const searchParams = new URLSearchParams();
-      productIds.forEach((id) => searchParams.append("productIds", id));
-      const url = `/api/cart/products?${searchParams.toString()}`;
-      return fetchData(url);
-    },
-    enabled: productIds.length > 0, // productIds가 있을 때만 요청
-  });
+  // const { data, isLoading, isError } = useCartQuery();
+  // console.log({ data });
 
-  if (isLoading || isError) {
-    return (
-      <main>
-        <section className="min-h-screen flex items-center justify-center">
-          {isLoading && <p>로딩중...</p>}
-          {isError && <p>에러발생</p>}
-        </section>
-      </main>
-    );
-  }
-
-  // 기존 groups 에 최신가격정보를 반영하기위해서 병합
-  const mergedGroups = groups.map((group) => {
-    return {
-      ...group,
-      items: group.items.map((item) => {
-        const foundItem = data.freshProducts?.find(
-          (product: Product) => product.productId === item.productId
-        );
-        return {
-          ...item,
-          price: Number(foundItem?.lprice) || 0, // 가격변동이 있을수있기때문에 최신정보로
-        };
-      }),
-    };
-  });
-  console.log({ mergedGroups });
+  // if (isLoading || isError) {
+  //   return (
+  //     <main>
+  //       <section className="min-h-screen flex items-center justify-center">
+  //         {isLoading && <p>로딩중...</p>}
+  //         {isError && <p>에러발생</p>}
+  //       </section>
+  //     </main>
+  //   );
+  // }
 
   return (
     <main>
       <section className="min-h-screen">
         <Stepper currentStep="cart" />
 
-        <ul className="flex flex-col gap-4 mt-8">
-          {mergedGroups?.map((group) => (
-            <GroupCard key={group.mallName} group={group} />
+        <ul className="ml-auto max-w-2xl flex flex-col gap-4 mt-8 ">
+          {cartList.map((item) => (
+            <li key={item.id} className="border rounded-lg p-2 flex gap-4">
+              <div>
+                <h1 className="truncate/">{item.product.title}</h1>
+                <p>브랜드: {item.product.brand}</p>
+                <p>유형: {item.product.productType}</p>
+                <p>가격: {formatCurrency(item.product.lprice)}원</p>
+              </div>
+
+              <div className="">
+                <button onClick={() => removeFromCart(item.id)}>
+                  <X />
+                </button>
+              </div>
+            </li>
           ))}
         </ul>
       </section>

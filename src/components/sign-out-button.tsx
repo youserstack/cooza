@@ -1,15 +1,13 @@
-import { signOut } from "@/auth";
-import { Button } from "@/components/ui/button";
+"use client";
+
+// import { signOut } from "@/auth";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 export default function SignOutButton() {
-  const action = async () => {
-    "use server";
-    await signOut({ redirectTo: "/" });
-  };
-
   return (
-    <form action={action}>
-      <Button type="submit">로그아웃</Button>
-    </form>
+    <DropdownMenuItem onClick={() => signOut({ redirectTo: "/" })} className="cursor-pointer">
+      로그아웃
+    </DropdownMenuItem>
   );
 }

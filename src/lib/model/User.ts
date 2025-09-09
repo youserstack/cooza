@@ -1,17 +1,6 @@
-import { Document, Schema, models, model } from "mongoose";
+import { Schema, models, model, InferSchemaType } from "mongoose";
 
-export interface IUser extends Document {
-  userId: string;
-  name: string;
-  email: string;
-  image: string;
-  // provider: string; // OAuth 제공자 정보 (예: "naver")
-  // providerId: string; // OAuth에서 제공하는 사용자 고유 ID
-  provider: string[]; // ✅ 여러 개의 OAuth 제공자 저장 가능
-  providerIds: { [key: string]: string }; // ✅ provider별 ID 저장
-}
-
-const UserSchema = new Schema<IUser>(
+const UserSchema = new Schema(
   {
     userId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -27,5 +16,7 @@ const UserSchema = new Schema<IUser>(
   }
 );
 
-const User = models.User || model<IUser>("User", UserSchema);
+export type UserType = InferSchemaType<typeof UserSchema>;
+const User = models.User || model<UserType>("User", UserSchema);
+
 export default User;

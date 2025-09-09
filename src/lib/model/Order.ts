@@ -1,20 +1,6 @@
-import { Document, Schema, models, model } from "mongoose";
+import { Schema, models, model, InferSchemaType } from "mongoose";
 
-export interface IOrder extends Document {
-  orderId: string;
-  userId: string;
-  productsInfo: ProductsInfo;
-  shippingInfo: ShippingInfo;
-  paymentInfo: {
-    mallName: string;
-    method: string;
-    amount: number;
-    paymentStatus: "pending" | "paid" | "failed"; // 결제 상태
-  };
-  status: "pending" | "shipped" | "delivered" | "canceled"; // 주문 상태
-}
-
-const OrderSchema: Schema = new Schema<IOrder>(
+const OrderSchema = new Schema(
   {
     orderId: { type: String, required: true, unique: true },
     userId: { type: String, required: true },
@@ -60,5 +46,6 @@ const OrderSchema: Schema = new Schema<IOrder>(
   }
 );
 
-const Order = models.Order || model<IOrder>("Order", OrderSchema);
+export type OrderType = InferSchemaType<typeof OrderSchema>; // 자동 추론
+const Order = models.Order || model<OrderType>("Order", OrderSchema);
 export default Order;

@@ -13,11 +13,14 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      "@typescript-eslint/no-unused-vars": "off", // 사용되지 않는 변수는 오류 대신 경고 처리
-      "@typescript-eslint/no-explicit-any": "warn", // 'any' 타입 사용을 경고로 변경
-      "react-hooks/exhaustive-deps": "warn", // useEffect 의존성 문제도 경고로 변경
-      "react/no-unescaped-entities": "off", // 따옴표 관련 ESLint 오류 해제
+      "@typescript-eslint/no-unused-vars": "off", // 사용되지 않는 변수
+      "react-hooks/exhaustive-deps": "off", // useEffect 의존성 문제
+      "react/no-unescaped-entities": "off", // 따옴표
     },
+  },
+  {
+    files: ["**/types/globals.d.ts"],
+    rules: { "no-var": "off" },
   },
 ];
 

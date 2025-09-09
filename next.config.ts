@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "*" }],
   },
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI,
+  },
   async headers() {
     return [
       {

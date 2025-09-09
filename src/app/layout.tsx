@@ -1,7 +1,6 @@
 import TanstackQueryProvider from "@/providers/tanstack-query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { inter } from "@/lib/utils/fonts";
@@ -33,8 +32,7 @@ export default function RootLayout({
             >
               <Header />
               {children}
-              <Footer />
-              <Toaster richColors expand closeButton />
+              {/* <Footer /> */}
             </ThemeProvider>
           </SessionProvider>
         </TanstackQueryProvider>

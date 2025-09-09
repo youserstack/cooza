@@ -1,15 +1,31 @@
-import { formSchema } from "@/app/ordersheet/ordersheet-form";
-import { IOrder } from "@/lib/model/Order";
-import { UseFormReturn } from "react-hook-form";
-import * as z from "zod";
+type PaymentType = {
+  price: number;
+  total: number;
+  mallName: string;
+  method: string;
+  paymentTiming: string;
+  amount: number;
+};
 
-/*
-  결제 관련 타입
-*/
+type ShippingType = {
+  receiver: string;
+  address: string;
+  phone: string;
+  message: string;
+};
 
-type OrdersheetForm = UseFormReturn<z.infer<typeof formSchema>>;
+type OrdersheetStateType = {
+  cartList: CartListType;
+  payment: PaymentType;
+  shipping: ShippingType;
+};
 
-type Ordersheet = Pick<
-  IOrder,
-  "userId" | "productsInfo" | "shippingInfo" | "paymentInfo" | "status"
->;
+type OrdersheetMethodsType = {
+  addToCart: (item: CartItemType) => void;
+  removeFromCart: (index: number) => void;
+  updatePayment: (payment: Partial<PaymentType>) => void;
+  updateShipping: (shipping: Partial<ShippingType>) => void;
+  resetOrdersheet: () => void;
+};
+
+type OrdersheetStoreType = OrdersheetStateType & OrdersheetMethodsType;

@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     const itemsPerPage = 10;
 
     // set the filter
-    const filter: any = {};
+    const filter: Record<string, unknown> = {};
     if (query) {
       filter.title = { $regex: query, $options: "i" }; // 대소문자 구분 없이 제목 검색
     }
