@@ -207,10 +207,10 @@
   }
 
   main {
+    @apply min-h-[calc(100vh-70px)];
     @apply space-y-8;
 
     > section:first-of-type {
-      @apply min-h-[calc(100vh-70px)];
       @apply mt-[50px] md:mt-[70px];
     }
   }
