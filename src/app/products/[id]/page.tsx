@@ -11,6 +11,8 @@ import Link from "next/link";
 
 export async function generateStaticParams() {
   const { allProductIds } = await getAllProductIds();
+  console.log({ allProductIds });
+
   return allProductIds.map((v: { productId: string }) => ({ id: v.productId }));
 }
 
@@ -19,7 +21,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   // 패스 파라미터 -> 제품 아이디 -> 조회
   const pathParams = await params;
   const { product } = await getProduct(pathParams.id);
-  console.log({ product });
+  // console.log({ product });
 
   return (
     <main>

@@ -1,6 +1,5 @@
 import { getOrderList } from "@/lib/fetchers/order";
 import Pagination from "@/components/pagination";
-import OrderCard from "@/components/order-card";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { auth } from "@/auth";
@@ -32,11 +31,7 @@ export default async function Page(props: {
         {/* 주문 리스트 */}
         <Suspense fallback={<div>loading...</div>}>
           <div>
-            <ul className="flex flex-col gap-4">
-              {orders.map((order: OrderedType) => (
-                <OrderCard key={order.orderId} order={order} />
-              ))}
-            </ul>
+            <ul className="flex flex-col gap-4"></ul>
 
             <Pagination totalPages={Math.ceil(totalItems / itemsPerPage)} />
           </div>
