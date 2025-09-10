@@ -22,7 +22,10 @@ import Link from "next/link";
 
 export default function SideMenu() {
   return (
-    <Drawer direction="right" disablePreventScroll>
+    <Drawer
+      direction="right"
+      // disablePreventScroll
+    >
       <DrawerTrigger className="block">
         <Menu className="size-[20px]" />
       </DrawerTrigger>
