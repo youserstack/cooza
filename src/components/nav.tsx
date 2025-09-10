@@ -28,7 +28,6 @@ export default function Nav() {
         {/* 디지털/가전 */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>디지털/가전</NavigationMenuTrigger>
-
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {["전체", "컴퓨터", "TV", "세탁기/건조기", "냉장고", "청소기"].map((item) => (
@@ -43,7 +42,6 @@ export default function Nav() {
         {/* 패션의류 */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>패션의류</NavigationMenuTrigger>
-
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {["전체", "공용", "남성", "여성", "아동", "잡화", "신발"].map((item) => (
@@ -58,7 +56,6 @@ export default function Nav() {
         {/* 생활/건강 */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>생활/건강</NavigationMenuTrigger>
-
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {[

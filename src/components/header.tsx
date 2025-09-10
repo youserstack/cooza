@@ -75,7 +75,7 @@ export default async function Header() {
           </DropdownMenu>
         </div> */}
 
-        <div>
+        <div className="ml-2">
           <SideMenu />
         </div>
       </section>
