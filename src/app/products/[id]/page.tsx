@@ -9,12 +9,12 @@ import Link from "next/link";
 
 // export const revalidate = 30; // 재검증시간설정 : n초동안캐시
 
-export async function generateStaticParams() {
-  const { allProductIds } = await getAllProductIds();
-  console.log({ allProductIds });
+// export async function generateStaticParams() {
+//   const { allProductIds } = await getAllProductIds();
+//   console.log({ allProductIds });
 
-  return allProductIds.map((v: { productId: string }) => ({ id: v.productId }));
-}
+//   return allProductIds.map((v: { productId: string }) => ({ id: v.productId }));
+// }
 
 // 제품상세 페이지
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
