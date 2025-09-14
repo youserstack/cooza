@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// *페이지당페이지넘버수 : pageNums 개수
+// 페이지당 페이지넘버의 수 -> 페이지넘버버튼(Button)의 수 -> pageNums의 수
 const numbersPerPage = 10;
 
 // 서버컴포넌트로부터 전체페이지수를 입력받는다.

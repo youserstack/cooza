@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import Logo from "@/components/logo";
 import Nav from "@/components/nav";
-import SearchBar from "@/components/search-bar";
 import UserAvatar from "@/components/user-avatar";
 import { Button } from "@/components/ui/button";
 import { Bell, Ellipsis, Menu, Settings } from "lucide-react";
@@ -56,33 +55,14 @@ export default async function Header() {
           )}
 
           {/* 회원 메뉴 */}
-          {session && <UserAvatar session={session} src="https://github.com/shadcn.png" />}
+          {<UserAvatar />}
         </div>
 
-        {/* 옵션기능(...) 메뉴 -> 데스크탑 메뉴 */}
-        {/* <div className="block md:hidden ml-2">
-          <DropdownMenu modal={false}>
-            <DropdownMenuTrigger className="block p-1 rounded-full relative hover:bg-muted">
-              <Menu size={16} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <ThemeMenuSub />
-              <DropdownMenuItem>메뉴1</DropdownMenuItem>
-              <DropdownMenuItem>메뉴1</DropdownMenuItem>
-              <DropdownMenuItem>메뉴1</DropdownMenuItem>
-              <DropdownMenuItem>메뉴1</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div> */}
-
-        <div className="ml-2">
+        {/* 사이드 네비게이션 메뉴 -> 모바일 메뉴 */}
+        <div className="block md:hidden ml-2">
           <SideMenu />
         </div>
       </section>
-
-      {/* <section>
-        <SearchBar />
-      </section> */}
     </header>
   );
 }

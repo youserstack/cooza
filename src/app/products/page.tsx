@@ -5,6 +5,7 @@ import { Suspense } from "react";
 export default async function Page(props: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
+  // 쿼리파라미터 -> 검색어 쿼리, 카테고리, 정렬, 페이지(현재페이지번호)
   const queryParams = await props.searchParams;
   const query = queryParams.query || "";
   const category = queryParams.category || "";

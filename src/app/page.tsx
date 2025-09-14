@@ -3,14 +3,16 @@ import GridBanners from "@/components/sections/grid-banners";
 import WideBanner from "@/components/sections/wide-banner";
 import { CustomCarousel } from "@/components/custom-carousel";
 import { iphones } from "@/data/banners";
+import Test from "@/components/test";
 
 export default function Home() {
   return (
     <main>
-      <CustomCarousel />
+      {/* <CustomCarousel />
       <Categories />
       <WideBanner src={iphones} width={1920} height={800} className="max-w-6xl" />
-      <GridBanners />
+      <GridBanners /> */}
+      <Test />
     </main>
   );
 }

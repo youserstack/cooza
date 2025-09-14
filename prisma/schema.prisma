@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./output/prisma"
+}
+
+model User {
+  id    String  @id @default(uuid())
+  email String  @unique
+  name  String?
+
+  carts Cart[]
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+  userId    String // Foreign Key Field
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relation Field
+  user  User       @relation(fields: [userId], references: [id])
+  // Back-Relation Field
+  // 관계 참조용 필드
+  // items 필드는 Prisma Client에서 CartItem 배열을 가져올 수 있게 해주는 필드
+  // 실제 DB Cart 테이블에는 items 컬럼이 없고, CartItem 테이블의 cartId 외래키로 연결됨
+  // 그래서 SQL 쿼리로 SELECT * FROM Cart 해보면 items 컬럼은 없음
+  items CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cartId    String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  cart    Cart    @relation(fields: [cartId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  maker       String
+  description String?
+  image       String
+  seller      String
+  category    String[]
+  price       Int
+  stock       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  cartItems CartItem[]
+}
+
+// 스키마수정후 방법1
+// 1. 스키마 수정 
+// 2. 클라이언트 생성 : npx prisma generate
+// 3. 마이그레이션 생성 : npx prisma migrate dev --name update_model
+// 4. 시드 데이터 동기화 : npx prisma db seed
+// 예외사항 -> 모델에 새로운 필드 추가한 경우 -> not null 제약조건으로 해결불가 -> 기존의 데이터는 새로운 필드가 존재하지 않기 때문에
+
+// 스키마수정후 방법2
+// 프리즈마 개발 데이터베이스 리셋
+// npx prisma migrate reset
+// -> 데이터베이스 드랍
+// -> 마이그레이션 적용
+// -> 시드 명령 실행 (package.json에 설정된 prisma.seed)

@@ -13,6 +13,7 @@ export default async function Page(props: {
   // 사용자 인증 확인
   const session = await auth();
   const userId = session?.user.userId;
+
   if (!userId) redirect("/signin");
 
   // 쿼리파라미터 -> 현재 페이지 정보

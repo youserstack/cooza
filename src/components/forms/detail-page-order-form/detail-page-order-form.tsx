@@ -112,7 +112,7 @@ export default function DetailPageOrderForm({ product }: { product: ProductType 
       </fieldset>
 
       {/* 수량 */}
-      <Quantity price={Number(product.lprice)} form={form} />
+      <Quantity price={Number(product.price)} form={form} />
 
       {/* 장바구니/바로주문하기 버튼 */}
       <div className="flex items-center justify-end gap-4">

@@ -9,33 +9,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Session } from "next-auth";
 import Link from "next/link";
-import NotificationCount from "@/components/notification-count";
+import { auth } from "@/auth";
 
-export default function UserAvatar({
-  session,
-  src,
-  alt,
-}: {
-  session: Session;
-  src: string;
-  alt?: string;
-}) {
+export default async function UserAvatar() {
+  const session = await auth();
+
+  if (!session) return null;
+
   return (
     <DropdownMenu modal={false}>
+      {/* 회원 아바타 버튼 */}
       <DropdownMenuTrigger asChild>
         <div className="relative">
           <Avatar className="cursor-pointer hover:ring-2 hover:ring-ring transition duration-300 size-[24px]">
-            <AvatarImage src={src} alt={alt} />
+            <AvatarImage src={session?.user?.image || "https://github.com/shadcn.png"} alt="" />
             <AvatarFallback>
               {session?.user?.name?.slice(0, 1).toUpperCase() || "CN"}
             </AvatarFallback>
           </Avatar>
-
-          {/* 알림표시 */}
-          {/* <div className="absolute top-0 left-0 size-2 rounded-full bg-red-500"></div> */}
-          {/* <NotificationCount /> */}
         </div>
       </DropdownMenuTrigger>
 

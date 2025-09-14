@@ -7,11 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-interface Props {
-  category: string;
-}
-
-export function BreadcrumbWithSeparator({ category }: Props) {
+export function BreadcrumbWithSeparator({ category }: { category: string }) {
   return (
     <Breadcrumb className="BreadcrumbWithSeparator">
       <BreadcrumbList>

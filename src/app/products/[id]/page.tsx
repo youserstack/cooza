@@ -1,6 +1,6 @@
-import { BreadcrumbWithSeparator } from "@/components/breadcrumb-with-separator";
 import DetailPageOrderForm from "@/components/forms/detail-page-order-form/detail-page-order-form";
-import { getAllProductIds, getProduct } from "@/lib/fetchers/product";
+import { BreadcrumbWithSeparator } from "@/components/breadcrumb-with-separator";
+import { getAllProductIds, getProductItem } from "@/lib/clients/product";
 import { formatCurrency } from "@/lib/utils/format-currency";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
@@ -10,23 +10,24 @@ import Link from "next/link";
 // export const revalidate = 30; // 재검증시간설정 : n초동안캐시
 
 export async function generateStaticParams() {
-  const { allProductIds } = await getAllProductIds();
+  const allProductIds = await getAllProductIds();
   console.log({ allProductIds });
 
-  return allProductIds.map((v: { productId: string }) => ({ id: v.productId }));
+  return allProductIds.map((id) => ({ id }));
 }
 
 // 제품상세 페이지
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   // 패스 파라미터 -> 제품 아이디 -> 조회
   const pathParams = await params;
-  const { product } = await getProduct(pathParams.id);
-  // console.log({ product });
+  const product = await getProductItem({ id: pathParams.id });
+
+  if (!product) return null;
 
   return (
     <main>
       <section>
-        <BreadcrumbWithSeparator category={product.category1} />
+        <BreadcrumbWithSeparator category={product.category[0]} />
 
         <div className="mt-8 block md:flex border rounded-lg overflow-hidden">
           {/* 좌측 -> 제품 이미지 */}
@@ -37,22 +38,22 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </div>
 
           {/* 우측 -> 제품정보 */}
-          <div className="flex-1/2 md:p-4">
+          <div className="flex-1/2 md:p-4 p-2">
             {/* 상단 */}
             <div>
               {/* 스토어 링크 */}
               <Link href="#" className="text-[13px]">
-                {product.mallName}
+                {product.seller}
               </Link>
 
               {/* 제목 */}
-              <h1 className="text-xl font-semibold ">{product.title}</h1>
+              <h1 className="text-xl font-semibold ">{product.name}</h1>
 
               {/* 가격/리뷰 */}
               <div className="flex items-center gap-4 mt-4">
                 {/* 가격 */}
                 <span className="text-lg font-semibold">
-                  <span>{formatCurrency(Number(product.lprice))}</span>
+                  <span>{formatCurrency(Number(product.price))}</span>
                   <span className="ml-[2px]">원</span>
                 </span>
 

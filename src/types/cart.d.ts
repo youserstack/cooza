@@ -12,16 +12,13 @@ type CartItemType = {
 
 type CartListType = CartItemType[];
 
-type CartStateType = {
+type CartStoreType = {
   cartList: CartListType;
-};
-
-type CartMethodsType = {
+} & {
   addToCart: (item: Omit<CartItemType, "id">) => void;
   updateQuantity: (id: string, quantity: number) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
+  getTotalPrice: () => number;
   getTotalQuantity: () => number;
 };
-
-type CartStoreType = CartStateType & CartMethodsType;
