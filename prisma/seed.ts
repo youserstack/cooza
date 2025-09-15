@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 // 유저 시드 데이터
 const userData: Prisma.UserCreateInput[] = [
   {
-    name: "Alice",
-    email: "alice@prisma.io",
+    name: "김민종",
+    email: "kim@prisma.io",
   },
   {
-    name: "Bob",
-    email: "bob@prisma.io",
+    name: "권지용",
+    email: "gd@prisma.io",
   },
 ];
 
@@ -123,9 +123,10 @@ export async function main() {
   console.log("🌱 Start seeding ...");
 
   // 유저 데이터 삽입
-  for (const u of userData) {
-    await prisma.user.create({ data: u });
-  }
+  await prisma.user.createMany({
+    data: userData,
+    skipDuplicates: true, // 이미 존재하는 unique 필드는 무시
+  });
 
   // 상품 데이터 삽입
   await prisma.product.createMany({ data: productData });
