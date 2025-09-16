@@ -28,7 +28,7 @@ export async function getProductList({
   }
 
   if (category) {
-    where.category = category;
+    where.category = { has: category };
   }
 
   // orderBy 구성
@@ -83,7 +83,7 @@ export async function getProductCount({ query, category }: { query?: string; cat
   }
 
   if (category) {
-    where.category = category;
+    where.category = { has: category };
   }
 
   return prisma.product.count({ where });

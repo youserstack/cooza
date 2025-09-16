@@ -4,17 +4,15 @@ import Link from "next/link";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   return (
-    <Link href={`/products/${product.id}`} className="block">
+    <div className="block">
       {/* 제품이미지 */}
       <div className="relative rounded-lg overflow-hidden">
-        <Image src={product.image} alt="" width={300} height={300} />
+        <Link href={`/products/${product.id}`} className="relative aspect-square block">
+          <Image src={product.image} alt="" fill />
+        </Link>
 
         {/* 카트버튼 */}
-        <div
-          className="absolute right-1 bottom-1 
-          flex items-center justify-center 
-          overflow-hidden"
-        >
+        <div className="absolute right-1 bottom-1 flex items-center justify-center overflow-hidden">
           <AddToCartButton product={product} />
         </div>
       </div>
@@ -28,6 +26,6 @@ export default function ProductCard({ product }: { product: ProductType }) {
           <p className="text-[10px] mb-[2px]">배송비 3,000원</p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
