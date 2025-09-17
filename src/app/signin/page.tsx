@@ -3,7 +3,13 @@ import { ShipWheel } from "lucide-react";
 import Link from "next/link";
 
 // 로그인 페이지
-export default function Page() {
+export default async function Page(props: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+  const queryParams = await props.searchParams;
+  const callbackUrl = queryParams.callbackUrl ?? "/";
+  // console.log({ callbackUrl });
+
   return (
     <main>
       <section className="flex flex-col items-center justify-center">
@@ -13,7 +19,7 @@ export default function Page() {
             Cooza Inc.
           </Link>
 
-          <SignInForm />
+          <SignInForm callbackUrl={callbackUrl} />
         </div>
       </section>
     </main>

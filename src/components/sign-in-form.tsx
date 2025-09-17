@@ -7,9 +7,9 @@ import { FcGoogle } from "react-icons/fc";
 import { SiNaver } from "react-icons/si";
 import SignInButton from "@/components/sign-in-button";
 
-export function SignInForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+export function SignInForm({ callbackUrl }: { callbackUrl: string }) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
@@ -17,84 +17,68 @@ export function SignInForm({ className, ...props }: React.ComponentPropsWithoutR
         </CardHeader>
 
         <CardContent className="grid gap-6">
-          <Oauth />
-          <Divider />
-          <GeneralAuth />
-          <SignupNotice />
+          {/* Oauth 인증 */}
+          <div className="flex flex-col gap-4">
+            <SignInButton
+              provider="google"
+              label="구글로 로그인"
+              Icon={FcGoogle}
+              callbackUrl={callbackUrl}
+            />
+            <SignInButton
+              provider="naver"
+              label="네이버로 로그인"
+              Icon={SiNaver}
+              iconClassName="!h-3 text-[#03C75A]"
+              callbackUrl={callbackUrl}
+            />
+          </div>
+
+          {/* 디바이더 */}
+          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+            <span className="relative z-10 bg-background px-2 text-muted-foreground">
+              또는 이메일로 계속하기
+            </span>
+          </div>
+
+          {/* 이메일 인증 */}
+          <form className="grid gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="email">이메일</Label>
+              <Input id="email" type="email" placeholder="example@example.com" required />
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">비밀번호</Label>
+                <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
+                  비밀번호를 잊으셨나요?
+                </a>
+              </div>
+              <Input id="password" type="password" required />
+            </div>
+            <Button type="submit" className="w-full">
+              로그인
+            </Button>
+          </form>
+
+          {/* 가입관련 */}
+          <div className="text-center text-sm space-x-4">
+            <span>계정이 없으신가요?</span>
+            <a href="#" className="underline underline-offset-4">
+              회원가입
+            </a>
+          </div>
         </CardContent>
       </Card>
 
-      <AgreementNotice />
-    </div>
-  );
-}
-
-function Oauth() {
-  return (
-    <div className="flex flex-col gap-4">
-      <SignInButton provider="google" label="구글로 로그인" Icon={FcGoogle} />
-      <SignInButton
-        provider="naver"
-        label="네이버로 로그인"
-        Icon={SiNaver}
-        iconClassName="!h-3 text-[#03C75A]"
-      />
-    </div>
-  );
-}
-
-function Divider() {
-  return (
-    <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-      <span className="relative z-10 bg-background px-2 text-muted-foreground">
-        또는 이메일로 계속하기
-      </span>
-    </div>
-  );
-}
-
-function GeneralAuth() {
-  return (
-    <form className="grid gap-6">
-      <div className="grid gap-2">
-        <Label htmlFor="email">이메일</Label>
-        <Input id="email" type="email" placeholder="example@example.com" required />
+      {/* 개인정보 및 약관동의 */}
+      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-primary">
+        <span>계속 진행하면 </span>
+        <a href="#">이용 약관</a>
+        <span> 및 </span>
+        <a href="#">개인정보 처리방침</a>
+        <span> 에 동의하는 것으로 간주됩니다.</span>
       </div>
-      <div className="grid gap-2">
-        <div className="flex items-center">
-          <Label htmlFor="password">비밀번호</Label>
-          <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
-            비밀번호를 잊으셨나요?
-          </a>
-        </div>
-        <Input id="password" type="password" required />
-      </div>
-      <Button type="submit" className="w-full">
-        로그인
-      </Button>
-    </form>
-  );
-}
-
-function SignupNotice() {
-  return (
-    <div className="text-center text-sm space-x-4">
-      <span>계정이 없으신가요?</span>
-      <a href="#" className="underline underline-offset-4">
-        회원가입
-      </a>
-    </div>
-  );
-}
-
-function AgreementNotice() {
-  return (
-    <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-primary">
-      <span>계속 진행하면 </span>
-      <a href="#">이용 약관</a>
-      <span> 및 </span>
-      <a href="#">개인정보 처리방침</a>
-      <span> 에 동의하는 것으로 간주됩니다.</span>
     </div>
   );
 }

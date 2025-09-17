@@ -2,17 +2,22 @@ import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { IconType } from "react-icons/lib";
 
-interface Props {
+export default function SignInButton({
+  provider,
+  label,
+  Icon,
+  iconClassName,
+  callbackUrl,
+}: {
   provider: string;
   label: string;
   Icon: IconType;
   iconClassName?: string;
-}
-
-export default function SignInButton({ provider, label, Icon, iconClassName }: Props) {
+  callbackUrl: string;
+}) {
   const action = async () => {
     "use server";
-    await signIn(provider, { redirectTo: "/" });
+    await signIn(provider, { redirectTo: callbackUrl });
   };
 
   return (
